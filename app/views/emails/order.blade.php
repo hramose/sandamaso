@@ -14,6 +14,7 @@
 				display: table;
 				font-weight: 50;
 				font-family: 'Lato';
+				display: block;
 			}
 
 			.container {
