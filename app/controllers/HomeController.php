@@ -45,7 +45,8 @@ class HomeController extends BaseController {
 		$days = array();
 		foreach(new DatePeriod($start, $oneday, $end->add($oneday)) as $day) {
 		    $day_num = $day->format("N");
-		    if($day_num < 6) { 
+		    $dia =  $day->format('d');
+		    if($day_num <= 6 && $dia > 5 && $dia < 25){
 		        $days[] = $day->format("Y-m-d");
 		    } 
 		}    
