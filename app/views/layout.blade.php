@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="description" content="Reserva de horas San Damasco">
+    <meta name="description" content="Reserva de horas sandamaso">
     <meta name="author" content="github.com/davila7">
     <meta property="og:title" content=""/>
     <meta property="og:image" content=""/>
@@ -109,16 +109,6 @@
 </li>
 </ul></div>    </nav>
 </div>
-
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-10466317-30', 'auto');
-ga('send', 'pageview');
-</script>
 </header>
 
 
@@ -131,17 +121,17 @@ ga('send', 'pageview');
         <section class="ico-blocks">
           <div class="textwidget">
             <p style="text-align: center;">
-              <a title="Precios" href="servicios/tarifas-de-servicios/">
+              <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
                 <img class="alignnone size-full wp-image-26" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-precios.png" alt="ico-como_llegar" width="66" height="50" />
             </a>
         </p>
         <h4 style="text-align: center;">
-            <a title="Precios" href="servicios/tarifas-de-servicios/">
+            <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
                 Tarifas de Servicios
             </a>
         </h4>
         <p style="text-align: center;">
-            <a title="Precios" href="servicios/tarifas-de-servicios/">
+            <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
               Conozca los valores de los servicios de revisión técnica
           </a>
       </p>
@@ -150,17 +140,17 @@ ga('send', 'pageview');
 <section class="ico-blocks">
     <div class="textwidget">
       <p style="text-align: center;">
-        <a title="Sugerencias" href="contacto/sugerencias-o-reclamos/">
+        <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
           <img class="alignnone size-full wp-image-27 aligncenter" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-reclamos.png" alt="ico-documentos" width="66" height="50" />
       </a>
   </p>
   <h4 style="text-align: center;">
-    <a title="Sugerencias" href="contacto/sugerencias-o-reclamos/">
+    <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
       Sugerencias o reclamos
   </a>
 </h4>
 <p style="text-align: center;">
-    <a title="Sugerencias" href="contacto/sugerencias-o-reclamos/">
+    <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
       Escríbanos sus opiniones e impresiones de nuestros servicios
   </a>
 </p>
@@ -169,17 +159,17 @@ ga('send', 'pageview');
 <section class="ico-blocks">
     <div class="textwidget">
       <p style="text-align: center;">
-        <a title="Preguntas" href="servicios/preguntas-frecuentes/">
+        <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
           <img class="alignnone size-full wp-image-28" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-preguntas_frecuentes.png" alt="ico-preguntas_frecuentes" width="66" height="50" />
       </a>
   </p>
   <h4 style="text-align: center;">
-    <a title="Preguntas" href="servicios/preguntas-frecuentes/">
+    <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
       Preguntas Frecuentes
   </a>
 </h4>
 <p style="text-align: center;">
-    <a title="Preguntas" href="servicios/preguntas-frecuentes/">
+    <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
       Aquí encontrará respuestas a dudas recurrentes
   </a>
 </p>
@@ -190,17 +180,17 @@ ga('send', 'pageview');
 <section class="ico-blocks">
     <div class="textwidget">
       <p style="text-align: center;">
-        <a title="Contacto" href="contacto/escribanos/">
+        <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
           <img class="alignnone size-full wp-image-29" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-contacto.png" alt="ico-contacto" width="66" height="50" />
       </a>
         </p>
   <h4 style="text-align: center;">
-        <a title="Contacto" href="contacto/escribanos/">
+        <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
             Contáctenos
         </a>
     </h4>
 <p style="text-align: center;">
-    <a title="Contacto" href="contacto/escribanos/">
+    <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
       y resolveremos sus dudas
     </a>
 </p>
@@ -228,21 +218,21 @@ ga('send', 'pageview');
 {{ Rapyd::scripts() }}
 
 
-<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery-1.7.1.min.js"></script>
+<!--<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery-1.7.1.min.js"></script>
 
 <!-- FlexSlider JS -->
-<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.flexslider.js"></script>
+<!--<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.flexslider.js"></script>
 <!-- Mean Menu JS -->
-<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.meanmenu.js"></script> 
+<!--<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.meanmenu.js"></script> 
 <!-- FancyBox JS -->
-<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.mousewheel-3.0.4.pack.js"></script>
+<!--<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.mousewheel-3.0.4.pack.js"></script>
 <script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.fancybox-1.3.4.pack.js"></script>
 
 <!-- link to the JavaScript files (hoverIntent is optional) -->
-<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/hoverIntent.js"></script>
+<!--<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/hoverIntent.js"></script>
 <script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/superfish.js"></script>
 
 <!-- AWS FUNCIONES -->
-<script type="text/javascript" src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.awsfunciones.js" ></script>
+<!--<script type="text/javascript" src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery.awsfunciones.js" ></script>-->
 </body>
 </html>
