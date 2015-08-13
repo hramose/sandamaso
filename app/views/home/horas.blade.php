@@ -14,9 +14,9 @@
     <input type="hidden" name="hora" id="hora" value="" />
     <input type="hidden" name="planta" value="{{ $planta }}" />
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-3">
             <div class="form-group">
-                <label for="Rango de Fechas">Horas para reservar.</label>
+                <label for="Rango de Fechas">Horas disponibles para {{ $planta }} el {{ date('d-m-Y',strtotime($fecha)) }}</label>
                 <div class="btn-group" role="group" aria-label="...">
                       @foreach($horas_reservar as $item)
                         <button type="button" class="btn btn-default hora_select">{{ $item }}</button>

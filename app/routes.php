@@ -17,6 +17,9 @@ Route::post('reservas/buscar','HomeController@BuscarReserva');
 Route::get('/horasdisponibles/{fecha}/{planta}','HomeController@HorasDisponibles');
 Route::post('reservas/reservar','HomeController@Reservar');
 
-//admin app
-Route::get('/admin','UserController@IndexAdmin');
 
+//admin app
+Route::get('/admin','HomeController@IndexAdmin');
+Route::post('/login','HomeController@Login');
+Route::get('/reservas/list','HomeController@ListarReservas');
+Route::any('/reservas/crud','HomeController@CrudReservas');

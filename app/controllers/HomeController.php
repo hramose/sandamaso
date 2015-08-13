@@ -24,6 +24,32 @@ class HomeController extends BaseController {
 									->with('fecha_hasta', '');
 	}
 
+	public function IndexAdmin(){
+		if (Auth::check()){
+            return View::make('home.admin');
+        }else{
+            return View::make('home.login'); 
+        }
+	}
+
+	public function Login(){
+		$credentials = array(
+        'email' => Input::get('email'),
+        'password' => Input::get('password'));
+        if(Auth::attempt($credentials)){
+            $user = User::where('email', '=', Input::get('email'))->firstOrFail();
+            Auth::login($user);
+            return View::make('home.admin');
+        }else{
+            return View::make('home.login')->withErrors('incorrecto');
+        }   
+    }
+
+     public function CerrarSesionGet(){
+        Auth::logout();
+        return View::make('home.admin'); 
+    }
+
 	public function BuscarReserva(){
 		$planta = Input::get('planta');
 		$fecha_desde = Input::get('fecha_desde');
@@ -69,6 +95,38 @@ class HomeController extends BaseController {
 									->with('planta', $planta)
 									->with('fechas_reservar', $fechas_reservar);
 	}
+
+
+	public function ListarReservas(){
+
+		$filter = DataFilter::source(new Reservas);
+		$filter->attributes(array('class'=>'form-inline'));
+		$filter->add('nombre','Buscar por nombre', 'text');
+		$filter->add('email','Buscar por email', 'text');
+		$filter->add('patente','Buscar por patente', 'text');
+		$filter->add('fecha','Fecha Reserva','daterange')->format('d/m/Y', 'es');
+		$filter->submit('Buscar');
+		$filter->reset('Limpiar');
+
+		$grid = DataGrid::source($filter);
+	    $grid->attributes(array("class"=>"table table-striped"));
+	    $grid->add('nombre','Nombre', true);
+	    $grid->add('email','Email', true);
+	    $grid->add('patente','Patente', true);
+	    $grid->add('tipo_vehiculo','Tipo Vehículo', true);
+	   	$grid->add('fecha','Fecha', true);
+		$grid->edit(url().'/reservas/crud', 'Ver|Editar|Borrar','delete');
+	    $grid->paginate(10);
+
+		return View::make('reservas/list', compact('filter', 'grid', 'etapa'));
+	}
+
+	public function Crudreservas(){
+        $edit = DataEdit::source(new Reservas());
+        $edit->link("/","Lista Reservas", "TR")->back();
+        return $edit->view('reservas/crud', compact('edit'));
+    }
+
 
 	public function HorasDisponibles($fecha, $planta){
 		$horas = array(
@@ -129,6 +187,7 @@ class HomeController extends BaseController {
 		$reserva->convenio = $convenio;
 		$reserva->tipo_vehiculo = $tipo_vehiculo;
 		$reserva->tipo_revision = $tipo_revision;
+		$reserva->fecha = $fecha;
 		$reserva->save();
 
 		$num_fecha = Horas::where('fecha', $fecha)->count();
