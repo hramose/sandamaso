@@ -199,7 +199,7 @@
 
 
 <footer>
-    <div class="container foot">
+    <div class="container foot zero-pad" >
         <div class="logo-footer">
             <a href="http://www.sandamaso.cl" /><img src="http://www.sandamaso.cl/wp-content/themes/sandamaso/images/logo-footer.png" alt="logo-footer" width="197" height="50" /></a>
         </div><!-- end logo footer -->
