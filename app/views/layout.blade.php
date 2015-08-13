@@ -44,6 +44,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}" />
     <script src="{{ asset('js/modernizr.js') }}"></script>
 
         <!--[if lt IE 9]>
@@ -60,12 +61,7 @@
           <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
           <script src="{{ asset('js/bootstrap-datepicker.es.js') }}"></script>
 
-<style type="text/css" media="screen">
-    .container{
-        padding: 0px;
-    }
-    
-</style>
+
 
 
           <header>
@@ -117,7 +113,7 @@
 </div>
 
 <figure class="ico-home">
-    <div class="container ico-align">
+    <div class="container ico-align" style="padding:0px;">
         <section class="ico-blocks">
           <div class="textwidget">
             <p style="text-align: center;">

@@ -4,17 +4,13 @@
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-sm-12">
-        <a href="{{ URL::to('/') }}" class="btn btn-default">Volver a Buscar</a>
-        </div>
-    </div>
-    {{ Form::open(array('url' => 'reservas/reservar')) }}
+       {{ Form::open(array('url' => 'reservas/reservar')) }}
     <input type="hidden" name="fecha" value="{{ $fecha }}" />
     <input type="hidden" name="hora" id="hora" value="" />
     <input type="hidden" name="planta" value="{{ $planta }}" />
     <div class="row">
         <div class="col-md-3">
+
             <div class="form-group">
                 <label for="Rango de Fechas">Horas disponibles para {{ $planta }} el {{ date('d-m-Y',strtotime($fecha)) }}</label>
                 <div class="btn-group" role="group" aria-label="...">
@@ -23,28 +19,40 @@
                       @endforeach
                 </div>
             </div>
+        
         </div>
-        <div class="col-sm-6">
+        <div class="col-md-6">
+            <div class="col-sm-6">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required>
             </div>
+        </div>
+            <div class="col-md-6">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="telefono">Telefono</label>
                 <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Telefono" required>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="patente">Patente</label>
                 <input type="text" class="form-control" name="patente" id="patente" placeholder="Patente" required>
             </div>
+        </div>
+
             <div class="form-group">
                 <label for="comentario">Comentario</label>
                 <textarea class="form-control" id="textarea" name="comentario" rows="3"></textarea>
             </div>
+            </div>
+            <div class="col-md-3">
             <div class="form-group">
                 <label for="convenio">Concenio</label>
                 <select class="form-control" name="convenio">
@@ -69,10 +77,15 @@
                   <option value="Pre Revisión Técnica (Antofagasta)">Pre Revisión Técnica (Antofagasta)</option>
                 </select>
             </div>
-        </div>
+            </div>
+        
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-md-12">
+<div class="text-center">
             <button type="submit" class="btn btn-primary">Reservar</button>
+
+        <a href="{{ URL::to('/') }}" class="btn btn-default">Volver a Buscar</a>
+</div>
         </div>
     </div>
     {{ Form::close() }}
