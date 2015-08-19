@@ -9,10 +9,15 @@
     <input type="hidden" name="hora" id="hora" value="" />
     <input type="hidden" name="planta" value="{{ $planta }}" />
     <div class="row">
+        <div class="col-md-12">
+        <h3>Horas disponibles para {{ $planta }} el {{ date('d-m-Y',strtotime($fecha)) }}</h3>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-3">
 
             <div class="form-group">
-                <label for="Rango de Fechas">Horas disponibles para {{ $planta }} el {{ date('d-m-Y',strtotime($fecha)) }}</label>
+                <label for="">Selecciona la hora de la reserva</label>
                 <div class="btn-group" role="group" aria-label="...">
                       @foreach($horas_reservar as $item)
                         <button type="button" class="btn btn-default hora_select">{{ $item }}</button>
@@ -54,7 +59,7 @@
             </div>
             <div class="col-md-3">
             <div class="form-group">
-                <label for="convenio">Concenio</label>
+                <label for="convenio">Convenio</label>
                 <select class="form-control" name="convenio">
                   <option value="Sin Convenio">Sin Convenio</option>
                   <option value="Convenio 1">Convenio 1</option>

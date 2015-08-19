@@ -14,7 +14,6 @@
 				display: table;
 				font-weight: 50;
 				font-family: 'Lato';
-				display: block;
 			}
 
 			.container {
@@ -40,20 +39,17 @@
 	</head>
 	<body>
 		<div class="container">
-			<a href="{{ URL::to('/user/logout'); }}">
-			<img src="http://proyectoentel.herokuapp.com/img/own-logo.png" height="30" width="80" />
-			</a>
+			<img src="http://www.sandamaso.cl/wp-content/themes/sandamaso/images/logo-footer.png" height="30" width="80" />
 			<div class="content">
-				<div class="title">Nueva orden de Carcaza</div>
-				<div class="quote">{{ HTML::link('admin', 'Ir al panel de control') }}</div>
+				<div class="title">Reserva confirmada</div>
 				<table>
 				<tbody>
 					<tr>
 					<th>
-						Usuario
+						Nombre
 					</th>
 					<td>
-						{{ $user }}
+						{{ $nombre }}
 					</td>
 					</tr>
 					<tr>
@@ -66,35 +62,67 @@
 					</tr>
 					<tr>
 					<th>
-						Step One
+						Telefono
 					</th>
 					<td>
-						{{ $paso_uno }}
+						{{ $telefono }}
 					</td>
 					</tr>
 					<tr>
 					<th>
-						Option
+						Planta
 					</th>
 					<td>
-						{{ $option_name }}
+						{{ $planta }}
 					</td>
 					</tr>
 					<tr>
 					<th>
-						Color
+						Fecha
 					</th>
 					<td>
-						{{ $option_color }}
+						{{ $fecha }} {{ $hora }}
 					</td>
 					</tr>
 					<tr>
 					<th>
-						Address
+						Patente
 					</th>
 					<td>
-						{{ $address }}
+						{{ $patente }}
 					</td>
+					</tr>
+					<tr>
+						<th>
+							Convenio
+						</th>
+						<td>
+							{{ $convenio }}
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Tipo Vehiculo
+						</th>
+						<td>
+							{{ $tipo_vehiculo }}
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Tipo Revision
+						</th>
+						<td>
+							{{ $tipo_revision }}
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Comentario
+						</th>
+						<td>
+							{{ $comentario }}
+						</td>
 					</tr>
 				</tbody>
 				</table>

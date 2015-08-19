@@ -16,6 +16,8 @@
               <h2>Se ha enviado un correo a <strong>{{ $email }}</strong> con la información de su reserva.
               <p>Nombre: {{ $nombre }}</p>
               <p>Fecha: {{ $fecha }} {{ $hora }}</p>
+              <p>Planta: {{ $planta }}</p>
+              <h3>Gracias por su preferencia.</h3>
             </div>
         </div>
     </div>

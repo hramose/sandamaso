@@ -20,6 +20,7 @@ class HomeController extends BaseController {
 		$fecha_desde = date("d-m-Y");
 		return View::make('home.home')->with('fechas_reservar','')
 									->with('planta', '')
+									->with('carga', 1)
 									->with('fecha_desde', $fecha_desde)
 									->with('fecha_hasta', '');
 	}
@@ -44,6 +45,11 @@ class HomeController extends BaseController {
             return View::make('home.login')->withErrors('incorrecto');
         }   
     }
+
+    public function Logout(){
+		Auth::logout();
+        return Redirect::to('/admin');
+	}
 
      public function CerrarSesionGet(){
         Auth::logout();
@@ -93,6 +99,7 @@ class HomeController extends BaseController {
 		return View::make('home.home')->with('fecha_desde', $fecha_desde )
 									->with('fecha_hasta', $fecha_hasta)
 									->with('planta', $planta)
+									->with('carga', 0)
 									->with('fechas_reservar', $fechas_reservar);
 	}
 
@@ -114,8 +121,9 @@ class HomeController extends BaseController {
 	    $grid->add('email','Email', true);
 	    $grid->add('patente','Patente', true);
 	    $grid->add('tipo_vehiculo','Tipo Vehículo', true);
-	   	$grid->add('fecha','Fecha', true);
-		$grid->edit(url().'/reservas/crud', 'Ver|Editar|Borrar','delete');
+	   	$grid->add('{{ date("d-m-Y",strtotime($fecha)) }}','Fecha', true);
+	   	$grid->add('hora','Hora', true);
+		//$grid->edit(url().'/reservas/crud', 'Ver|Editar|Borrar','delete');
 	    $grid->paginate(10);
 
 		return View::make('reservas/list', compact('filter', 'grid', 'etapa'));
@@ -188,6 +196,7 @@ class HomeController extends BaseController {
 		$reserva->tipo_vehiculo = $tipo_vehiculo;
 		$reserva->tipo_revision = $tipo_revision;
 		$reserva->fecha = $fecha;
+		$reserva->hora = $hora;
 		$reserva->save();
 
 		$num_fecha = Horas::where('fecha', $fecha)->count();
@@ -209,8 +218,47 @@ class HomeController extends BaseController {
 		$horas->id_fecha = $fechas->id;
 		$horas->save();
 
+
+		 $data = array(
+          		"nombre"=>$nombre,
+                "fecha"=>$fecha,
+                "email"=>$email,
+                "hora"=>$hora,
+                "planta"=>$planta
+                );
+
+		 $dataadmin = array(
+          		"nombre"=>$nombre,
+                "fecha"=>$fecha,
+                "email"=>$email,
+                "hora"=>$hora,
+                "planta"=>$planta,
+                "patente"=>$patente,
+                "convenio"=>$convenio,
+                "tipo_vehiculo"=>$tipo_vehiculo,
+                "tipo_revision"=>$tipo_revision,
+                "telefono"=>$telefono,
+                "email"=>$email,
+                "comentario"=>$comentario
+                );
+        //email al cliente
+        $emails = array($email);
+        Mail::send('emails.email', $data, function($message) use ($emails){
+			$message->from('no-reply@sandamaso.cl', 'San Damaso - revisiones técnicas');	
+			$message->to($emails, 'test')->subject('Reserva recibida');
+        });
+
+        //email al admin
+		$emails = array('dan.avila7@gmail.com');
+		Mail::send('emails.emailadmin', $dataadmin, function($message) use ($emails){
+          	$message->from('no-reply@sandamaso.cl', 'San Damaso - Admin');
+            $message->to($emails, 'test')->subject('Nueva Reserva');
+        });
+
+
 		return View::make('home.reservado')->with('nombre', $nombre)
 										->with('fecha', $fecha)
+										->with('planta', $planta)
 										->with('email', $email)
 										->with('hora', $hora);
 	}

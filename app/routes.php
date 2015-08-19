@@ -21,5 +21,6 @@ Route::post('reservas/reservar','HomeController@Reservar');
 //admin app
 Route::get('/admin','HomeController@IndexAdmin');
 Route::post('/login','HomeController@Login');
+Route::get('/logout','HomeController@Logout');
 Route::get('/reservas/list','HomeController@ListarReservas');
 Route::any('/reservas/crud','HomeController@CrudReservas');

@@ -76,8 +76,14 @@
         </div>
     </div>
     @else
-    <br/>
-    <div class="alert alert-warning" role="alert">No se encontraron resultados para esta busqueda, vuelve a intentarlo con otro rango de fechas</div>
+        @if($carga == 1)
+        <br/>
+        <div class="alert alert-info" role="alert">Reserva tu hora buscando por un rango de fechas.</div>
+        @else
+        <br/>
+        <div class="alert alert-warning" role="alert">No se encontraron resultados para esta busqueda, vuelve a intentarlo con otro rango de fechas</div>
+        @endif
+    
     @endif
 
 

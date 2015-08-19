@@ -14,6 +14,7 @@
 				display: table;
 				font-weight: 50;
 				font-family: 'Lato';
+				display: block;
 			}
 
 			.container {
@@ -39,12 +40,30 @@
 	</head>
 	<body>
 		<div class="container">
-			<a href="{{ URL::to('/user/logout'); }}">
-			<img src="http://proyectoentel.herokuapp.com/img/own-logo.png" height="30" width="80" />
-			</a>
+			<img src="http://www.sandamaso.cl/wp-content/themes/sandamaso/images/logo-footer.png" height="30" width="80" />
 			<div class="content">
-				<div class="title">Recibimos tu orden de carcaza</div>
-				<div class="quote">Tu carcaza ya ha sido ingresada a producción. Te avisaremos cuando ya se encuentre lista para su entrega.</div>
+				<div class="title">{{ $nombre }} tu hora a sido reservada</div>
+				<table>
+				<tbody>
+					<tr>
+					<th>
+						Planta
+					</th>
+					<td>
+						{{ $planta }}
+					</td>
+					</tr>
+					<tr>
+					<th>
+						Fecha
+					</th>
+					<td>
+						{{ $fecha }} {{ $hora }}
+					</td>
+					</tr>
+				</tbody>
+				</table>
+				<h1>Gracias por su preferencia</h1>
 			</div>
 		</div>
 	</body>
