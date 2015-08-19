@@ -4,7 +4,7 @@
 @stop
 
 @section('content')
-       {{ Form::open(array('url' => 'reservas/reservar')) }}
+       {{ Form::open(array('url' => 'reservas/reservar', 'id'=>'form_reserva')) }}
     <input type="hidden" name="fecha" value="{{ $fecha }}" />
     <input type="hidden" name="hora" id="hora" value="" />
     <input type="hidden" name="planta" value="{{ $planta }}" />
@@ -24,7 +24,7 @@
                       @endforeach
                 </div>
             </div>
-        
+            <div class="alert hide alert-danger" id="hora_alert" role="alert">Debe seleccionar una hora</div>
         </div>
         <div class="col-md-6">
             <div class="col-sm-6">
@@ -68,7 +68,6 @@
             <div class="form-group">
                 <label for="tipo_vehiculo">Tipo de Vehículo</label>
                 <select class="form-control" name="tipo_vehiculo" >
-                  <option value="">Seleccione una opción</option>
                   <option value="Automovil">Automovil</option>
                   <option value="Camioneta">Camioneta</option>
                   <option value="Motocicleta">Motocicleta</option>
@@ -87,7 +86,7 @@
     <div class="row">
         <div class="col-md-12">
 <div class="text-center">
-            <button type="submit" class="btn btn-primary">Reservar</button>
+            <button type="button" id="reservar" class="btn btn-primary">Reservar</button>
 
         <a href="{{ URL::to('/') }}" class="btn btn-default">Volver a Buscar</a>
 </div>
@@ -97,6 +96,16 @@
 
 <script type="text/javascript">
 $(function() {
+
+    $('#reservar').click(function(){
+        if($('#hora').val() == ""){
+            $('#hora_alert').removeClass('hide');
+        }else{
+            $('#hora_alert').addClass('hide');
+            $('#form_reserva').submit();
+        }
+    });
+
     $('.hora_select').click(function(){
         $('.hora_select').removeClass('btn-primary').addClass('btn-default');
         $(this).removeClass('btn-default').addClass('btn-primary');
