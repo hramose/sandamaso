@@ -241,8 +241,7 @@ class HomeController extends BaseController {
                 "email"=>$email,
                 "comentario"=>$comentario
                 );
-        //email al clienteasdas
-		 asdas
+        //email al cliente
         $emails = array($email);
         Mail::send('emails.email', $data, function($message) use ($emails){
 			$message->from('no-reply@sandamaso.cl', 'San Damaso - revisiones técnicas');	
