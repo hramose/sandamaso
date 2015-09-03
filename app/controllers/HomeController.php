@@ -66,18 +66,14 @@ class HomeController extends BaseController {
 		$fecha_desde = Input::get('fecha_desde');
 		$fecha_hasta = Input::get('fecha_hasta');
 		$patente = Input::get('patente');
+		
 		$start = date("Y-m-d", strtotime($fecha_desde));
 		$end = date("Y-m-d", strtotime($fecha_hasta));
+		
 		$plantas = Plantas::all();
 
 		$start = new DateTime($start);
 		$end = new DateTime($end);
-
-		echo $planta->num_dias;
-		echo '<br/>';
-		echo $planta->sabados;
-		echo '<br/>';
-		echo $planta->dias_restriccion;
 		
 		$fechas = FechasReservas::whereBetween('fecha', array($start, $end))
 								->where('lleno', 1)
