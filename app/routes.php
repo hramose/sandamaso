@@ -14,7 +14,7 @@
 //app reserva de horas
 Route::get('/','HomeController@Index');
 Route::post('reservas/buscar','HomeController@BuscarReserva');
-Route::get('/horasdisponibles/{fecha}/{planta}','HomeController@HorasDisponibles');
+Route::get('/horasdisponibles/{fecha}/{planta}/{patente}','HomeController@HorasDisponibles');
 Route::post('reservas/reservar','HomeController@Reservar');
 
 
@@ -24,3 +24,11 @@ Route::post('/login','HomeController@Login');
 Route::get('/logout','HomeController@Logout');
 Route::get('/reservas/list','HomeController@ListarReservas');
 Route::any('/reservas/crud','HomeController@CrudReservas');
+Route::get('/plantas/list','HomeController@ListarPlantas');
+Route::any('/plantas/crud','HomeController@CrudPlantas');
+
+
+//informes
+Route::get('/informes/general/{planta?}/{fecha_desde?}/{fecha_hasta?}','InformesController@General');
+Route::get('/informes/pordiaget','InformesController@PorDiaGet');
+Route::post('/informes/pordia','InformesController@PorDia');

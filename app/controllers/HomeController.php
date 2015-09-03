@@ -18,9 +18,13 @@ class HomeController extends BaseController {
 	public function Index(){
 
 		$fecha_desde = date("d-m-Y");
+		$plantas = Plantas::all();
 		return View::make('home.home')->with('fechas_reservar','')
 									->with('planta', '')
+									->with('plantas', $plantas)
+									->with('id_planta', '')
 									->with('carga', 1)
+									->with('patente', '')
 									->with('fecha_desde', $fecha_desde)
 									->with('fecha_hasta', '');
 	}
@@ -57,18 +61,27 @@ class HomeController extends BaseController {
     }
 
 	public function BuscarReserva(){
-		$planta = Input::get('planta');
+		$id_planta = Input::get('id_planta');
+		$planta = Plantas::find($id_planta);
 		$fecha_desde = Input::get('fecha_desde');
 		$fecha_hasta = Input::get('fecha_hasta');
+		$patente = Input::get('patente');
 		$start = date("Y-m-d", strtotime($fecha_desde));
 		$end = date("Y-m-d", strtotime($fecha_hasta));
+		$plantas = Plantas::all();
 
 		$start = new DateTime($start);
 		$end = new DateTime($end);
+
+		echo $planta->num_dias;
+		echo '<br/>';
+		echo $planta->sabados;
+		echo '<br/>';
+		echo $planta->dias_restriccion;
 		
 		$fechas = FechasReservas::whereBetween('fecha', array($start, $end))
 								->where('lleno', 1)
-								->where('planta', $planta)
+								->where('planta', $planta->nombre)
 								->lists('fecha');
 		
 		$oneday = new DateInterval("P1D");
@@ -78,9 +91,31 @@ class HomeController extends BaseController {
 		foreach(new DatePeriod($start, $oneday, $end->add($oneday)) as $day) {
 		    $day_num = $day->format("N");
 		    $dia =  $day->format('d');
-		    if($day_num <= 6 && $dia > 5 && $dia < 25){
-		        $days[] = $day->format("Y-m-d");
-		    } 
+		    $max = 30 - $planta->num_dias;
+		    if($planta->sabados == 0 && $planta->dias_restriccion == 1){
+		    	if($day_num <= 6 && $dia > $planta->num_dias && $dia < $max){
+		        	$days[] = $day->format("Y-m-d");
+		    	} 
+		    }else{
+		    	if($planta->sabados == 0 && $planta->dias_restriccion == 0){
+		    		if($day_num <= 6){
+		        	$days[] = $day->format("Y-m-d");
+		    		} 
+		    	}else{
+		    		if($planta->sabados == 1 && $planta->dias_restriccion == 1){
+		    			if($day_num <= 5 && $dia > $planta->num_dias && $dia < $max){
+		        			$days[] = $day->format("Y-m-d");
+		    			} 
+		    		}else{
+		    			if($planta->sabados == 1 && $planta->dias_restriccion == 0){
+		    				if($day_num <= 5){
+		        				$days[] = $day->format("Y-m-d");
+		    				}
+		    			}
+		    		}
+		    	}
+		    }
+		    	
 		}    
 
 		$fechas_reservar = array();
@@ -98,19 +133,29 @@ class HomeController extends BaseController {
 
 		return View::make('home.home')->with('fecha_desde', $fecha_desde )
 									->with('fecha_hasta', $fecha_hasta)
-									->with('planta', $planta)
+									->with('planta', $planta->nombre)
+									->with('id_planta', $id_planta)
+									->with('plantas', $plantas)
+									->with('patente', $patente)
 									->with('carga', 0)
 									->with('fechas_reservar', $fechas_reservar);
 	}
 
+	function isWeekend($date) {
+    	return (date('N', strtotime($date)) >= 6);
+	}
+
 
 	public function ListarReservas(){
-
+		$fecha1 = date('Y-d-m', strtotime(Input::get('fecha')[0]));
+		$fecha2 = date('Y-d-m', strtotime(Input::get('fecha')[1]));
 		$filter = DataFilter::source(new Reservas);
+		$filter->link('/informes/general/'.Input::get('planta').'/'.$fecha1.'/'.$fecha2,'Exportar', 'TR');
 		$filter->attributes(array('class'=>'form-inline'));
 		$filter->add('nombre','Buscar por nombre', 'text');
 		$filter->add('email','Buscar por email', 'text');
 		$filter->add('patente','Buscar por patente', 'text');
+		$filter->add('planta','Buscar por planta', 'text');
 		$filter->add('fecha','Fecha Reserva','daterange')->format('d/m/Y', 'es');
 		$filter->submit('Buscar');
 		$filter->reset('Limpiar');
@@ -120,6 +165,7 @@ class HomeController extends BaseController {
 	    $grid->add('nombre','Nombre', true);
 	    $grid->add('email','Email', true);
 	    $grid->add('patente','Patente', true);
+	    $grid->add('planta','Planta', true);
 	    $grid->add('tipo_vehiculo','Tipo Vehículo', true);
 	   	$grid->add('{{ date("d-m-Y",strtotime($fecha)) }}','Fecha', true);
 	   	$grid->add('hora','Hora', true);
@@ -136,7 +182,41 @@ class HomeController extends BaseController {
     }
 
 
-	public function HorasDisponibles($fecha, $planta){
+    public function ListarPlantas(){
+
+		$filter = DataFilter::source(new Plantas);
+		$filter->label('Restricciones');
+		//$filter->link('/plantas/crud', 'Crear Nuevo', 'TR');
+		$filter->attributes(array('class'=>'form-inline'));
+		$filter->add('nombre','Buscar por nombre', 'text');
+		$filter->submit('Buscar');
+		$filter->reset('Limpiar');
+
+		$grid = DataGrid::source($filter);
+	    $grid->attributes(array("class"=>"table table-striped"));
+	    $grid->add('nombre','Nombre', true);
+	    $grid->add('sabados','Sabados', true);
+	    $grid->add('dias_restriccion','Primeros/Ultimos días', true);
+	    $grid->add('num_dias','Numero de Días', true);
+	    $grid->edit(url().'/plantas/crud', 'Editar','modify');
+	    $grid->paginate(10);
+
+		return View::make('plantas/list', compact('filter', 'grid', 'etapa'));
+	}
+
+	public function CrudPlantas(){
+        $edit = DataEdit::source(new Plantas());
+        $edit->link("/plantas/list","Lista Plantas", "TR")->back();
+        $edit->add('nombre','Nombre', 'text')->rule('required');
+        $edit->add('sabados','Sabados', 'checkbox');
+        $edit->add('dias_restriccion','Primeros/Ultimos Días','checkbox');
+        $edit->add('num_dias','Numero de Días','text')->rule('required');
+
+        return $edit->view('plantas/crud', compact('edit'));
+    }
+
+
+	public function HorasDisponibles($fecha, $planta, $patente){
 		$horas = array(
 			'07:00','07:30',
 			'08:00','08:30',
@@ -150,9 +230,157 @@ class HomeController extends BaseController {
 			'16:00','16:30',
 			'17:00','17:30',
 			'18:00','18:30',
-			'19:00','19:30',
-			'20:00','20:30'
+			'19:00'
 			);
+		if($this->isWeekend($fecha)){
+			$horas = array(
+			'08:30',
+			'09:00','09:30',
+			'10:00','10:30',
+			'11:00','11:30',
+			'12:00','12:30',
+			'13:00','13:30'
+			);
+		}
+		if($planta == '1'){
+			$horas = array(
+				'08:00','08:30',
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','15:00',
+				'15:30','16:00',
+				'16:30','17:00',
+				'17:30','18:00'
+				);	
+			if($this->isWeekend($fecha)){
+				$horas = array(
+						'08:30',
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','13:30'
+				);
+			}
+		}
+		if($planta == '2' || $planta == '3'){
+			$horas = array(
+			'09:00','09:30',
+			'10:00','10:30',
+			'11:00','11:30',
+			'12:00','12:30',
+			'13:00','13:30',
+			'14:00','14:30',
+			'15:00','15:30',
+			'16:00','16:30',
+			'17:00'
+			);
+		}
+		if($planta == '4'){
+			$horas = array(
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','15:00',
+				'15:30','16:00',
+				'16:30','17:00',
+				'17:30','18:00',
+				'18:30','19:00'
+				);	
+			if($this->isWeekend($fecha)){
+				$horas = array(
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','13:30',
+				'14:00'
+				);
+			}
+		}
+		if($planta == '5'){
+			$horas = array(
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','13:30',
+				'14:00','14:30',
+				'15:00','15:30',
+				'16:00','16:30',
+				'17:00','17:30',
+				'18:00'
+				);
+			if($this->isWeekend($fecha)){
+				$horas = array(
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','13:30',
+				'14:00'
+				);
+			}
+		}
+		if($planta == '6'){
+			$horas = array(
+				'07:00','07:30',
+				'08:00','08:30',
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','13:30',
+				'14:00','14:30',
+				'15:00','15:30',
+				'16:00','16:30',
+				'17:00','17:30',
+				'18:00','18:30',
+				'19:00'
+				);
+			if($this->isWeekend($fecha)){
+				$horas = array(
+				'07:00','07:30',
+				'08:00','08:30',
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','13:30',
+				'14:00','14:30',
+				'15:00','15:30',
+				'16:00'
+				);
+			}
+		}
+		if($planta == '7'){
+			$horas = array(
+				'08:00','08:30',
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','13:30',
+				'14:00','14:30',
+				'15:00','15:30',
+				'16:00','16:30',
+				'17:00','17:30',
+				'18:00'
+				);
+			if($this->isWeekend($fecha)){
+				$horas = array(
+				'08:30',
+				'09:00','09:30',
+				'10:00','10:30',
+				'11:00','11:30',
+				'12:00','12:30',
+				'13:00','13:30'
+				);
+			}
+		}
 		$horas_ocupadas = Horas::where('horas.fecha', $fecha)
 						->join('fechas_reservas', 'horas.id_fecha', '=', 'fechas_reservas.id')
 						->where('fechas_reservas.planta', $planta)->lists('horas.horas');
@@ -167,19 +395,21 @@ class HomeController extends BaseController {
 
 		return View::make('home.horas')->with('horas_reservar', $horas_reservar )
 										->with('fecha', $fecha)
+										->with('patente', $patente)
 										->with('planta', $planta);
 	}
 
 
 	public function Reservar(){
-		$fecha = Input::get('fecha');
+		echo 'lala'.Input::get('patente');
+		/*	$fecha = Input::get('fecha');
 		$hora = Input::get('hora');
-		$planta = Input::get('planta');
+		$planta = Plantas::find(Input::get('planta'))->nombre;
 		$nombre = Input::get('nombre');
 		$email = Input::get('email');
 		$telefono = Input::get('telefono');
 		$patente = Input::get('patente');
-		$comentario = Input::get('comentario');
+		$comentario = '';
 		$convenio = Input::get('convenio');
 		$tipo_vehiculo = Input::get('tipo_vehiculo');
 		$tipo_revision = Input::get('tipo_revision');
@@ -249,6 +479,7 @@ class HomeController extends BaseController {
         });
 
         //email al admin
+        //quilicura@sandamaso.cl
 		$emails = array('dan.avila7@gmail.com');
 		Mail::send('emails.emailadmin', $dataadmin, function($message) use ($emails){
           	$message->from('no-reply@sandamaso.cl', 'San Damaso - Admin');
@@ -260,6 +491,6 @@ class HomeController extends BaseController {
 										->with('fecha', $fecha)
 										->with('planta', $planta)
 										->with('email', $email)
-										->with('hora', $hora);
+										->with('hora', $hora);*/
 	}
 }

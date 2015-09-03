@@ -29,12 +29,33 @@
             
           <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+          <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+          <script src="{{ asset('js/bootstrap-datepicker.es.js') }}"></script>
+             <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url('admin') }}">Panel de Control</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
 
-                @if (Auth::check())
-                  <a href="{{ URL::to('/logout'); }}" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Cerrar Sesión</a>
+            <ul class="nav navbar-nav navbar-right">
+              <li>@if (Auth::check())
+                  <a href="{{ URL::to('/logout'); }}"><i class="glyphicon glyphicon-lock"></i> Cerrar Sesión</a>
                  @else
                  <li><a href="#" data-toggle="modal" data-target="#modalIS"><i class="glyphicon glyphicon-hand-right"></i> Iniciar Sesión</a></li>
-                 @endif
+                 @endif</li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+                
     <div class="container">
         @yield('content')
     </div>

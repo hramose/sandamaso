@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layoutadmin')
 
 @section('head')
 @stop
@@ -12,6 +12,8 @@
 				<div class="panel-body">
 					<h3>Bienvenido {{ Auth::user()->username }}</h3>
 					<div class="quote">{{ HTML::link('reservas/list','Reservas') }}</div>
+					<div class="quote">{{ HTML::link('informes/pordiaget','Informe por Día') }}</div>
+					<div class="quote">{{ HTML::link('plantas/list','Plantas') }}</div>
 				</div>
 			</div>
 		</div>

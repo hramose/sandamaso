@@ -6,6 +6,19 @@
 @section('content')
     {{ Form::open(array('url' => 'reservas/buscar', 'id'=>'form_busca')) }}
     <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <input type="text" placeholder="Ingrese la patente (LLNNNN, LLLLNN o LLLNNN)" name="patente" id="patente" class="form-control" value="{{ $patente == '' ? '': $patente }}" required /> 
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <input type="button" id="btn_patente" value="verificar">
+        </div>
+        <div class="col-sm-4">
+        <div class="alert alert-danger hide" id="formato" role="alert"></div>
+        </div>
+    </div>
+    <div class="row form_1 {{ $patente == '' ? 'hide' : '' }}">
         <div class="col-sm-3">
             <div class="form-group">
                 <label for="Rango de Fechas">Fecha Desde</label>
@@ -27,24 +40,16 @@
                     <span class="caret"></span>
                 </button>
                   <ul class="dropdown-menu" aria-labelledby="planta">
-                    <li><a href="#" class="val_planta" data-val="Valparaíso">Valparaíso</a></li>
-                    <li><a href="#" class="val_planta" data-val="Viña del Mar">Viña del Mar</a></li>
-                    <li><a href="#" class="val_planta" data-val="Quilicura">Quilicura</a></li>
-                    <li><a href="#" class="val_planta" data-val="Calama">Calama</a></li>
-                    <li><a href="#" class="val_planta" data-val="Antofagasta">Antofagasta</a></li>
-                    <li><a href="#" class="val_planta" data-val="Copiapó A-B">Copiapó A-B</a></li>
-                    <li><a href="#" class="val_planta" data-val="Chañaral A-B">Chañaral A-B</a></li>
+                    @foreach($plantas as $item)
+                       <li><a href="#" class="val_planta" data-val="{{ $item->id }}">{{ $item->nombre }}</a></li>
+                    @endforeach
                   </ul>
             </div>
             <label class="hide" id="planta_alert" style="color:red">Debe seleccionar una planta</label>
             </div>
-            <input type="hidden" name="planta" id="id_planta" value="{{ $planta == '' ? '' : $planta }}" />
+            <input type="hidden" name="id_planta" id="id_planta" value="{{ $id_planta == '' ? '' : $id_planta }}" />
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <button type="button" id="btn_submit" class="btn btn-primary">Buscar</button>
-        </div>
+        <button type="button" id="btn_submit" class="btn btn-primary">Buscar</button>
     </div>
     {{ Form::close() }}
     @if($fechas_reservar)
@@ -65,7 +70,7 @@
                             <tr>
                                 @foreach($items as $item)
                                 <td> 
-                                    <a href="{{ URL::to('/') }}/horasdisponibles/{{ $item }}/{{ $planta }}" class="btn btn-default">{{ date('d-m-Y', strtotime($item)) }}</a>
+                                    <a href="{{ URL::to('/') }}/horasdisponibles/{{ $item }}/{{ $id_planta }}/{{ $patente }}" class="btn btn-default">{{ date('d-m-Y', strtotime($item)) }}</a>
                                 </td>
                                 @endforeach
                             </tr>
@@ -86,7 +91,6 @@
     
     @endif
 
-
 <script type="text/javascript">
 $(function() {
     $('.val_planta').click(function(){
@@ -105,7 +109,171 @@ $(function() {
 
     });
 
-    $('.datepicker').datepicker({format: 'dd-mm-yyyy'})
-});
+function validaForm(){
+      var error = "";
+      var ok = true;
+    if($("#patente").val().length != 6){
+       error += "La Patente debe tener formato LLNNNN o formato LLLLNN.\n";
+       ok = false;
+      }
+      else{
+       var esPatenteAntigua = true;
+       var esPatenteNueva = true;
+       var esPatenteRemolque = true;
+       var paten = $("#patente").val();
+       // Primer caracter
+       if(!isAlpha(paten.substring(0,1))){
+        esPatenteAntigua = false;
+        esPatenteNueva = false;
+        esPatenteRemolque = false;
+       }
+       // Segundo caracter
+       if(!isAlpha(paten.substring(1,2))){
+        esPatenteAntigua = false;
+        esPatenteNueva = false;
+        esPatenteRemolque = false;
+       }
+       // Tercer caracter
+       if(!isNumeric(paten.substring(2,3))){
+        esPatenteAntigua = false;
+       }
+       if(!isAlpha(paten.substring(2,3))){
+        esPatenteNueva = false;
+        esPatenteRemolque = false;
+       }
+       // Cuarto caracter
+       if(!isNumeric(paten.substring(3,4))){
+        esPatenteAntigua = false;
+        esPatenteRemolque = false;
+       }
+       if(!isAlpha(paten.substring(3,4))){
+        esPatenteNueva = false;
+       }
+       // Quinto caracter
+       if(!isNumeric(paten.substring(4,5))){
+        esPatenteAntigua = false;
+        esPatenteNueva = false;
+        esPatenteRemolque = false;
+       }
+       // Sexto caracter
+       if(!isNumeric(paten.substring(5,6))){
+        esPatenteAntigua = false;
+        esPatenteNueva = false;
+        esPatenteRemolque = false;
+       }
+       if(!esPatenteAntigua && !esPatenteNueva && !esPatenteRemolque){
+        error += "La Patente debe tener formato LLNNNN, LLLLNN o LLLNNN.\n";
+        ok = false;
+       }
+      }
+     if(ok)
+     return true;
+     $('#formato').removeClass('hide').text(error);
+     return false;
+}
+var letters="abcdefghijklmnopqrstuvwxyz"
+var LETTERS="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+function isAlpha(c) {
+ if(letters.indexOf(c)>=0 || LETTERS.indexOf(c)>=0) return true;
+   return false;
+}
+var numbers="0123456789"
+function isNumeric(c) {
+if(numbers.indexOf(c)>=0) return true;
+ return false;
+}
+
+function validaDate(){
+  var paten = $("#patente").val();
+            var ultimo = paten.substring(5,6);
+            var d = new Date();
+            var m = d.getMonth() + 1;
+            var y = d.getFullYear();
+            var entra = true;
+            
+            //meses
+            switch(m) {
+                case 1:
+                    if(ultimo != 9 || ultimo != 0){
+                      entra = false;
+                    }
+                    break;
+                case 2:
+                    if(ultimo != 0 || ultimo != 1){ // 9
+                      entra = false;
+                    }
+                    break;
+                case 3:
+                     if(ultimo != 1){ // 0 y 9
+                      entra = false;
+                    }
+                    break;
+                case 4:
+                     if(ultimo != 1 || ultimo != 2){ // 0 y 9
+                      entra = false;
+                    }
+                    break;
+                case 5:
+                    if(ultimo != 2 || ultimo != 3){ // 1 , 0 y 9
+                      entra = false;
+                    }
+                    break;
+                case 6:
+                    if(ultimo != 3 || ultimo != 4){ // 9,0,1 y 2
+                      entra = false;
+                    }
+                    break;
+                case 7:
+                    if(ultimo != 4 || ultimo != 5){
+                      entra = false;
+                    }
+                    break;
+                case 8:
+                    if(ultimo != 5 || ultimo != 6){
+                      entra = false;
+                    }
+                    break;
+                case 9:
+                    if(ultimo != 6 || ultimo != 7){
+                      entra = false;
+                    }
+                    break;
+                case 10:
+                     if(ultimo != 7 || ultimo != 8){
+                      entra = false;
+                    }
+                    break;
+                case 11:
+                     if(ultimo != 8){
+                      entra = false;
+                    }
+                    break;
+                case 12:
+                      if(ultimo != 9){
+                      entra = false;
+                      }
+                    break;
+                default:
+                    break;
+            }
+      return entra;
+}
+
+
+    $('#btn_patente').click(function(){
+       if(validaForm() || validaDate()){
+            $('.form_1').removeClass('hide');
+            $('#formato').addClass('hide');
+            
+       }
+    });
+    var today = new Date();
+      $('.datepicker').datepicker({
+                format: 'dd-mm-yyyy', 
+                startDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()), 
+                endDate: '+1m', 
+                autoclose: true
+        });
+    });
 </script>
 @stop
