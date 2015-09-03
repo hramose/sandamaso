@@ -58,8 +58,9 @@
         
             <div class="col-md-6">
             <div class="form-group">
-                <label for="tipo_vehiculo">Tipo de Vehículo</label>
-                <select class="form-control" name="tipo_vehiculo" >
+                <label for="tipo_vehiculo" id="tipo_l">Tipo de Vehículo</label>
+                <select class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" >
+                    <option value="">Seleccione una opción</option>
                   <option value="Automovil">Automovil</option>
                   <option value="Camioneta">Camioneta</option>
                   <option value="Motocicleta">Motocicleta</option>
@@ -91,19 +92,23 @@ $(function() {
  var nombre = document.getElementById("nombre_l");
  var email = document.getElementById("email_l");
  var telefono = document.getElementById("telefono_l");
+ var tipo_l = document.getElementById('tipo_l');
+
 
  hora.innerHTML = "Selecciona la hora de la reserva";
  telefono.innerHTML = "Telefono";
  email.innerHTML = "Email";
  nombre.innerHTML = "Nombre";
+ tipo_l.innerHTML = "Tipo Vehículo";
  hora.style.color = "black";
  telefono.style.color = "black";
  email.style.color = "black";
  nombre.style.color = "black";
+ tipo_l.style.color = "black";
 
 
 
-        if($('#hora').val() == "" || $('#nombre').val() =='' || $('#email').val() =='' || $('#telefono').val() ==''){
+        if($('#hora').val() == "" || $('#nombre').val() =='' || $('#email').val() =='' || $('#telefono').val() =='' || $('#tipo_vehiculo').val() == ""){
             $('#hora_alert').removeClass('hide');
             if($('#hora').val() == "")
             {
@@ -117,6 +122,13 @@ $(function() {
                 
                  nombre.innerHTML = "Nombre (*)";
                 nombre.style.color = "red";
+
+            }
+
+            if($('#tipo_vehiculo').val() ==''){
+                
+                 tipo_l.innerHTML = "Tipo Vehículo (*)";
+                tipo_l.style.color = "red";
 
             }
 

@@ -407,8 +407,7 @@ class HomeController extends BaseController {
 
 
 	public function Reservar(){
-		echo 'lala'.Input::get('patente');
-		/*	$fecha = Input::get('fecha');
+		$fecha = Input::get('fecha');
 		$hora = Input::get('hora');
 		$planta = Plantas::find(Input::get('planta'))->nombre;
 		$nombre = Input::get('nombre');
@@ -497,6 +496,6 @@ class HomeController extends BaseController {
 										->with('fecha', $fecha)
 										->with('planta', $planta)
 										->with('email', $email)
-										->with('hora', $hora);*/
+										->with('hora', $hora);
 	}
 }

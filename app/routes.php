@@ -30,5 +30,6 @@ Route::any('/plantas/crud','HomeController@CrudPlantas');
 
 //informes
 Route::get('/informes/general/{planta?}/{fecha_desde?}/{fecha_hasta?}','InformesController@General');
+Route::get('/informes/general//{fecha_desde?}/{fecha_hasta?}','InformesController@GeneralFechas');
 Route::get('/informes/pordiaget','InformesController@PorDiaGet');
 Route::post('/informes/pordia','InformesController@PorDia');
