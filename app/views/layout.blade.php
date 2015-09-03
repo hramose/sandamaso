@@ -115,119 +115,116 @@
 
 
     <!-- Modal -->
-   
-
-        <div class="container">
-          @yield('content')
-        </div>
-
-        <figure class="ico-home">
-          <div class="container ico-align" style="padding:0px;">
-            <section class="ico-blocks">
-              <div class="textwidget">
-                <p style="text-align: center;">
-                  <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
-                    <img class="alignnone size-full wp-image-26" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-precios.png" alt="ico-como_llegar" width="66" height="50" />
-                  </a>
-                </p>
-                <h4 style="text-align: center;">
-                  <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
-                    Tarifas de Servicios
-                  </a>
-                </h4>
-                <p style="text-align: center;">
-                  <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
-                    Conozca los valores de los servicios de revisión técnica
-                  </a>
-                </p>
-              </div>
-            </section>
-            <section class="ico-blocks">
-              <div class="textwidget">
-                <p style="text-align: center;">
-                  <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
-                    <img class="alignnone size-full wp-image-27 aligncenter" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-reclamos.png" alt="ico-documentos" width="66" height="50" />
-                  </a>
-                </p>
-                <h4 style="text-align: center;">
-                  <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
-                    Sugerencias o reclamos
-                  </a>
-                </h4>
-                <p style="text-align: center;">
-                  <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
-                    Escríbanos sus opiniones e impresiones de nuestros servicios
-                  </a>
-                </p>
-              </div>
-            </section>
-            <section class="ico-blocks">
-              <div class="textwidget">
-                <p style="text-align: center;">
-                  <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
-                    <img class="alignnone size-full wp-image-28" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-preguntas_frecuentes.png" alt="ico-preguntas_frecuentes" width="66" height="50" />
-                  </a>
-                </p>
-                <h4 style="text-align: center;">
-                  <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
-                    Preguntas Frecuentes
-                  </a>
-                </h4>
-                <p style="text-align: center;">
-                  <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
-                    Aquí encontrará respuestas a dudas recurrentes
-                  </a>
-                </p>
-              </div>
-            </section>
 
 
-            <section class="ico-blocks">
-              <div class="textwidget">
-                <p style="text-align: center;">
-                  <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
-                    <img class="alignnone size-full wp-image-29" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-contacto.png" alt="ico-contacto" width="66" height="50" />
-                  </a>
-                </p>
-                <h4 style="text-align: center;">
-                  <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
-                    Contáctenos
-                  </a>
-                </h4>
-                <p style="text-align: center;">
-                  <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
-                    y resolveremos sus dudas
-                  </a>
-                </p>
-              </div>
-            </section>
+    <div class="container">
+      @yield('content')
+    </div>
 
+    <figure class="ico-home">
+      <div class="container ico-align" style="padding:0px;">
+        <section class="ico-blocks">
+          <div class="textwidget">
+            <p style="text-align: center;">
+              <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
+                <img class="alignnone size-full wp-image-26" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-precios.png" alt="ico-como_llegar" width="66" height="50" />
+              </a>
+            </p>
+            <h4 style="text-align: center;">
+              <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
+                Tarifas de Servicios
+              </a>
+            </h4>
+            <p style="text-align: center;">
+              <a title="Precios" href="http://www.sandamaso.cl/servicios/tarifas-de-servicios/">
+                Conozca los valores de los servicios de revisión técnica
+              </a>
+            </p>
           </div>
-        </figure>
+        </section>
+        <section class="ico-blocks">
+          <div class="textwidget">
+            <p style="text-align: center;">
+              <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
+                <img class="alignnone size-full wp-image-27 aligncenter" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-reclamos.png" alt="ico-documentos" width="66" height="50" />
+              </a>
+            </p>
+            <h4 style="text-align: center;">
+              <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
+                Sugerencias o reclamos
+              </a>
+            </h4>
+            <p style="text-align: center;">
+              <a title="Sugerencias" href="http://www.sandamaso.cl/contacto/sugerencias-o-reclamos/">
+                Escríbanos sus opiniones e impresiones de nuestros servicios
+              </a>
+            </p>
+          </div>
+        </section>
+        <section class="ico-blocks">
+          <div class="textwidget">
+            <p style="text-align: center;">
+              <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
+                <img class="alignnone size-full wp-image-28" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-preguntas_frecuentes.png" alt="ico-preguntas_frecuentes" width="66" height="50" />
+              </a>
+            </p>
+            <h4 style="text-align: center;">
+              <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
+                Preguntas Frecuentes
+              </a>
+            </h4>
+            <p style="text-align: center;">
+              <a title="Preguntas" href="http://www.sandamaso.cl/servicios/preguntas-frecuentes/">
+                Aquí encontrará respuestas a dudas recurrentes
+              </a>
+            </p>
+          </div>
+        </section>
+
+
+        <section class="ico-blocks">
+          <div class="textwidget">
+            <p style="text-align: center;">
+              <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
+                <img class="alignnone size-full wp-image-29" src="http://www.sandamaso.cl/wp-content/uploads/2014/09/ico-contacto.png" alt="ico-contacto" width="66" height="50" />
+              </a>
+            </p>
+            <h4 style="text-align: center;">
+              <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
+                Contáctenos
+              </a>
+            </h4>
+            <p style="text-align: center;">
+              <a title="Contacto" href="http://www.sandamaso.cl/contacto/escribanos/">
+                y resolveremos sus dudas
+              </a>
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </figure>
 
 
 
-        <footer>
-          <div class="container foot zero-pad" >
-            <div class="logo-footer">
-              <a href="http://www.sandamaso.cl" /><img src="http://www.sandamaso.cl/wp-content/themes/sandamaso/images/logo-footer.png" alt="logo-footer" width="197" height="50" /></a>
-            </div><!-- end logo footer -->
-            <div class="credits">
-              Oficina Central: Blanco 1623 - Of. 1501 - Valparaíso / Fonos: 32 - 274 62 25 / 32 - 274 62 26
-            </div><!-- end credits -->
-          </div><!-- end container foot -->
-        </footer><!-- end footer -->
+    <footer>
+      <div class="container foot zero-pad" >
+        <div class="logo-footer">
+          <a href="http://www.sandamaso.cl" /><img src="http://www.sandamaso.cl/wp-content/themes/sandamaso/images/logo-footer.png" alt="logo-footer" width="197" height="50" /></a>
+        </div><!-- end logo footer -->
+        <div class="credits">
+          Oficina Central: Blanco 1623 - Of. 1501 - Valparaíso / Fonos: 32 - 274 62 25 / 32 - 274 62 26
+        </div><!-- end credits -->
+      </div><!-- end container foot -->
+    </footer><!-- end footer -->
 
 
 
-        {{ Rapyd::scripts() }}
+    {{ Rapyd::scripts() }}
 
 
-        <script type="text/javascript">
-        setTimeout(function(){$('#myModal').modal('show'); }, 
 
-          0000);
-        </script>
+  </script>
 
 
 <!--<script src="http://www.sandamaso.cl/wp-content/themes/sandamaso/js/jquery-1.7.1.min.js"></script>
