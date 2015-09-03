@@ -28,12 +28,6 @@
                           @endforeach
                     </div>
                 @endif
-                <label for="" id="hora_l">Selecciona la hora de la reserva</label>
-                <div class="btn-group" role="group" aria-label="...">
-                      @foreach($horas_reservar as $item)
-                        <button type="button" class="btn btn-default hora_select">{{ $item }}</button>
-                      @endforeach
-                </div>
             </div>
            
         </div>
@@ -72,21 +66,7 @@
         </div>
     </div>
         <input type="hidden" value="{{ $patente }}" name="patente" id="patente" placeholder="Patente" >
-</div>
-            <div class="col-md-4">
-            <div class="form-group">
-                <label for="tipo_revision">Tipo de Revisión</label>
-                <select class="form-control" name="tipo_revision">
-                  <option value="Revisión Técnica">Revisión Técnica</option>
-                  <option value="Pre Revisión Técnica (Calama)">Pre Revisión Técnica (Calama)</option>
-                  <option value="Pre Revisión Técnica (Antofagasta)">Pre Revisión Técnica (Antofagasta)</option>
-                </select>
-            </div>
-            </div>
-            
-            </div>
-        
->>>>>>> origin/master
+    </div>
     <div class="row">
         <div class="col-md-12">
 <div class="text-center">

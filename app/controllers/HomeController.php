@@ -147,8 +147,14 @@ class HomeController extends BaseController {
 
 
 	public function ListarReservas(){
-		$fecha1 = date('Y-d-m', strtotime(Input::get('fecha')[0]));
-		$fecha2 = date('Y-d-m', strtotime(Input::get('fecha')[1]));
+		$fecha1=null;
+		$fecha2=null;
+		if(Input::get('fecha')[0] != ''){
+			$fecha1 = date('Y-d-m', strtotime(Input::get('fecha')[0]));
+		}
+		if(Input::get('fecha')[1] != ""){
+			$fecha2 = date('Y-d-m', strtotime(Input::get('fecha')[1]));
+		}
 		$filter = DataFilter::source(new Reservas);
 		$filter->link('/informes/general/'.Input::get('planta').'/'.$fecha1.'/'.$fecha2,'Exportar', 'TR');
 		$filter->attributes(array('class'=>'form-inline'));
