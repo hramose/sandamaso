@@ -16,12 +16,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 @if(count($horas_reservar) == 0)
                     <label for="">Reservas llenas, vuelva a buscar otra fecha.</label>
                 @else
-                    <label for="">Selecciona la hora de la reserva</label>
+                    <label for="" id="hora_l">Selecciona la hora de la reserva</label>
                     <div class="btn-group" role="group" aria-label="...">
                           @foreach($horas_reservar as $item)
                             <button type="button" class="btn btn-default hora_select">{{ $item }}</button>
@@ -31,10 +31,11 @@
             </div>
            
         </div>
-        <div class="col-md-6">
+
+        <div class="col-md-8">
              <div class="alert hide alert-danger" id="campos_alert" role="alert">Complete los campos requeridos</div>
-        <div class="col-md-9">
-            <div class="col-sm-6">
+        <div class="col-md-12">
+            <div class="col-md-6">
             <div class="form-group">
                 <label for="nombre" id="nombre_l">Nombre</label>
                 <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required>
@@ -47,14 +48,15 @@
             </div>
         </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
+            <div class="col-md-6">
             <div class="form-group">
                 <label for="telefono" id="telefono_l">Telefono</label>
                 <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Telefono" required>
-                
             </div>
         </div>
-            <div class="col-md-4">
+        
+            <div class="col-md-6">
             <div class="form-group">
                 <label for="tipo_vehiculo">Tipo de Vehículo</label>
                 <select class="form-control" name="tipo_vehiculo" >
@@ -65,6 +67,7 @@
             </div>
         </div>
     </div>
+</div>
         <input type="hidden" value="{{ $patente }}" name="patente" id="patente" placeholder="Patente" >
     </div>
     <div class="row">
