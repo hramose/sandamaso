@@ -8,138 +8,139 @@
 
 
 
- <div class="modal fade" id="myModal" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+<div class="modal fade" id="myModal" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
 
-                    <h4 class="modal-title" id="myModalLabel">Agendar revisión</h4>
-                </div>
-                <div class="modal-body">
-                    <p style="margin-bottom: 25px;"><strong>Asegure una atención más expedita haciendo reserva de día y hora de atención.</strong></p>
+                <h4 class="modal-title" id="myModalLabel">Agendar revisión</h4>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 25px;"><strong>Asegure una atención más expedita haciendo reserva de día y hora de atención.</strong></p>
 
-                    <p>Reservas se realizaran desde el día 5 al día 25 de cada mes, de lunes a viernes.
-                        Servicio para vehículos con dígito de placa patente correspondiente al mes en curso o mes anticipado.
-                        Nos contactaremos con usted para confirmar el requerimiento, dentro de 12 horas de recibido su mensaje hasta la hora de cierre.</p>
+                <p>Reservas se realizaran desde el día 5 al día 25 de cada mes, de lunes a viernes.
+                    Servicio para vehículos con dígito de placa patente correspondiente al mes en curso o mes anticipado.
+                    Nos contactaremos con usted para confirmar el requerimiento, dentro de 12 horas de recibido su mensaje hasta la hora de cierre.</p>
 
-                        <p>También solicite reserva para <a href="#" style="
+                    <p>También solicite reserva para <a href="#" style="
+                        color: #138CD9;
+                        text-decoration: none;
+                        transition: all 0.2s linear 0s;
+                        ">Servicio de Pre Revisión</a> y verifique el estado de su vehículo cuando usted quiera.</p>
+
+                        <p>Además participe en un sorteo especial entre todos los clientes que agenden revisión. </p>
+
+                        <p><a href="#" style="
                             color: #138CD9;
                             text-decoration: none;
                             transition: all 0.2s linear 0s;
-                            ">Servicio de Pre Revisión</a> y verifique el estado de su vehículo cuando usted quiera.</p>
+                            ">Ver Bases del concurso</a></p>
 
-                            <p>Además participe en un sorteo especial entre todos los clientes que agenden revisión. </p>
-
-                            <p><a href="#" style="
-                                color: #138CD9;
-                                text-decoration: none;
-                                transition: all 0.2s linear 0s;
-                                ">Ver Bases del concurso</a></p>
-
-                            </p>Llene los campos y nos contactaremos para agendar su revisión técnica.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
-                        </div>
+                        </p>Llene los campos y nos contactaremos para agendar su revisión técnica.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
                     </div>
                 </div>
             </div>
-            
+        </div>
 
 
 
-<div class="row">
-    <div class="col-sm-4">
-        <div class="form-group">
-            <input type="text" placeholder="Ingrese la patente (LLNNNN, LLLLNN o LLLNNN)" name="patente" id="patente" class="form-control" value="{{ $patente == '' ? '': $patente }}" required /> 
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <input type="button" id="btn_patente" value="verificar">
-    </div>
-    <div class="col-sm-4">
-        <div class="alert alert-danger hide" id="formato" role="alert"></div>
-    </div>
-</div>
-<div class="row form_1 {{ $patente == '' ? 'hide' : '' }}">
-    <div class="col-md-12" style="    margin: 30px 0;">
-        <div class="col-md-4 col-sm-4">
-            <div class="form-group">
-                <label for="Rango de Fechas">Fecha Desde</label>
-                <input type="text" name="fecha_desde" class="form-control datepicker" value="{{ $fecha_desde == '' ? '': $fecha_desde }}" required /> 
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-4">
-            <div class="form-group">
-                <label for="Rango de Fechas">Fecha Hasta</label>
-                <input type="text" name="fecha_hasta" class="form-control datepicker" value="{{ $fecha_hasta == '' ? '': $fecha_hasta }}" required />
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-4">
-            <div class="form-group">
-                <label for="Planta">Planta</label>
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="planta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-                        <span id="planta_nombre">{{ $planta == '' ? 'Planta' : $planta }}</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="planta">
-                        @foreach($plantas as $item)
-                        <li><a href="#" class="val_planta" data-val="{{ $item->id }}">{{ $item->nombre }}</a></li>
-                        @endforeach
-                    </ul>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <input type="text" placeholder="Ingrese la patente (LLNNNN, LLLLNN o LLLNNN)" name="patente" id="patente" class="form-control" value="{{ $patente == '' ? '': $patente }}" required /> 
                 </div>
-                <label class="hide" id="planta_alert" style="color:red">Debe seleccionar una planta</label>
             </div>
-            <input type="hidden" name="id_planta" id="id_planta" value="{{ $id_planta == '' ? '' : $id_planta }}" />
+            <div class="col-sm-4">
+                <input type="button" id="btn_patente" value="verificar">
+            </div>
+            <div class="col-sm-4">
+                <div class="alert alert-danger hide" id="formato" role="alert"></div>
+            </div>
         </div>
-        <button type="button" id="btn_submit" class="btn btn-primary">Buscar</button>
-    </div>
-    {{ Form::close() }}
-    @if($fechas_reservar)
-    <div class="row">
-        <div class="col-sm-12">
+        <div class="row form_1 {{ $patente == '' ? 'hide' : '' }}">
+            <div class="col-md-12" style="    margin: 30px 0;">
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label for="Rango de Fechas" id="fecha_dl">Fecha Desde</label>
+                        <input type="text" name="fecha_desde" id="fecha_d" class="form-control datepicker" value="{{ $fecha_desde == '' ? '': $fecha_desde }}" required /> 
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label for="Rango de Fechas" id="fecha_hl">Fecha Hasta</label>
+                        <input type="text" name="fecha_hasta" id="fecha_h" class="form-control datepicker" value="{{ $fecha_hasta == '' ? '': $fecha_hasta }}" required />
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label for="Planta" id="planta_l">Planta</label>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="planta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+                                <span id="planta_nombre">{{ $planta == '' ? 'Planta' : $planta }}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="planta">
+                                @foreach($plantas as $item)
+                                <li><a href="#" class="val_planta" data-val="{{ $item->id }}">{{ $item->nombre }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <label class="hide" id="planta_alert" style="color:red">Debe seleccionar una planta</label>
+                    </div>
+                    <input type="hidden" name="id_planta" id="id_planta" value="{{ $id_planta == '' ? '' : $id_planta }}" />
+                </div>
+                <button type="button" id="btn_submit" class="btn btn-primary">Buscar</button>
+            </div>
+            {{ Form::close() }}
+            @if($fechas_reservar)
+            <div class="row">
+                <div class="col-sm-12">
+                    <br/>
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Fechas con horas disponibles</div>
+                        <div class="panel-body">
+                            <p>Haz click sobre una fecha para ver las horas disponibles.</p>
+                        </div>
+
+                        <!-- Table -->
+                        <table class="table">
+                            <tbody>
+                                @foreach(array_chunk($fechas_reservar, 5) as $items)
+                                <tr>
+                                    @foreach($items as $item)
+                                    <td> 
+                                        <a href="{{ URL::to('/') }}/horasdisponibles/{{ $item }}/{{ $id_planta }}/{{ $patente }}" class="btn btn-default">{{ date('d-m-Y', strtotime($item)) }}</a>
+                                    </td>
+                                    @endforeach
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @else
+            @if($carga == 1)
             <br/>
-            <div class="panel panel-default">
-                <!-- Default panel contents -->
-                <div class="panel-heading">Fechas con horas disponibles</div>
-                <div class="panel-body">
-                    <p>Haz click sobre una fecha para ver las horas disponibles.</p>
-                </div>
+            <div class="alert alert-info" role="alert">Reserva tu hora buscando por un rango de fechas.</div>
+            @else
+            <br/>
+            <div class="alert alert-warning" role="alert">No se encontraron resultados para esta busqueda, vuelve a intentarlo con otro rango de fechas</div>
+            @endif
 
-                <!-- Table -->
-                <table class="table">
-                    <tbody>
-                        @foreach(array_chunk($fechas_reservar, 5) as $items)
-                        <tr>
-                            @foreach($items as $item)
-                            <td> 
-                                <a href="{{ URL::to('/') }}/horasdisponibles/{{ $item }}/{{ $id_planta }}/{{ $patente }}" class="btn btn-default">{{ date('d-m-Y', strtotime($item)) }}</a>
-                            </td>
-                            @endforeach
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    @else
-    @if($carga == 1)
-    <br/>
-    <div class="alert alert-info" role="alert">Reserva tu hora buscando por un rango de fechas.</div>
-    @else
-    <br/>
-    <div class="alert alert-warning" role="alert">No se encontraron resultados para esta busqueda, vuelve a intentarlo con otro rango de fechas</div>
-    @endif
-
-    @endif
+            @endif
 
 
             <script type="text/javascript">
 
+
             @if(!$id_planta)
-              setTimeout(function(){$('#myModal').modal('show'); },0000); 
+            setTimeout(function(){$('#myModal').modal('show'); },0000); 
             @endif
 
 
@@ -151,27 +152,64 @@
                 });
 
                 $('#btn_submit').click(function(){
-                    if($('#id_planta').val() == ''){
-                        $('#planta_alert').removeClass('hide');
+
+                    var inicio = document.getElementById('fecha_dl');
+                    var hasta = document.getElementById('fecha_hl');
+                    var planta = document.getElementById('planta_l');
+
+
+
+                    inicio.innerHTML = "Fecha Desde";
+                    inicio.style.color = "black";
+                    hasta.innerHTML = "Fecha hasta";
+                    hasta.style.color = "black";
+                    planta.innerHTML = "Planta";
+                    planta.style.color = "black";
+
+
+                    if($('#fecha_d').val() == '' || $('#fecha_h').val() =='' || $('#id_planta').val() == ''){
+                        if($('#fecha_d').val() == ''){
+                            inicio.innerHTML = "Fecha Desde (*)";
+                            inicio.style.color = "red";
+                            alert($('#fecha_dl').val())
+                        }
+
+                        if($('#fecha_h').val() == ''){
+                            hasta.innerHTML = "Fecha Hasta (*)";
+                            hasta.style.color = "red";
+                        }
+
+                        if($('#id_planta').val() == '')
+                        {
+                            planta.innerHTML = "Planta (*)";
+                            planta.style.color = "red";
+
+                        }
                     }else{
-                        $('#planta_alert').addClass('hide');
-                        $('#form_busca').submit();
+                     $('#form_busca').submit();   
                     }
+
+                    // if($('#id_planta').val() == ''){
+                    //     $('#planta_alert').removeClass('hide');
+                    // }else{
+                    //     $('#planta_alert').addClass('hide');
+                        
+                    // }
 
                 });
 
-                function validaForm(){
-                    var error = "";
-                    var ok = true;
-                    if($("#patente").val().length != 6){
-                        error += "La Patente debe tener formato LLNNNN o formato LLLLNN.\n";
-                        ok = false;
-                    }
-                    else{
-                        var esPatenteAntigua = true;
-                        var esPatenteNueva = true;
-                        var esPatenteRemolque = true;
-                        var paten = $("#patente").val();
+function validaForm(){
+    var error = "";
+    var ok = true;
+    if($("#patente").val().length != 6){
+        error += "La Patente debe tener formato LLNNNN o formato LLLLNN.\n";
+        ok = false;
+    }
+    else{
+        var esPatenteAntigua = true;
+        var esPatenteNueva = true;
+        var esPatenteRemolque = true;
+        var paten = $("#patente").val();
 // Primer caracter
 if(!isAlpha(paten.substring(0,1))){
     esPatenteAntigua = false;
