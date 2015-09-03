@@ -138,8 +138,9 @@
 
             <script type="text/javascript">
 
-
-            setTimeout(function(){$('#myModal').modal('show'); },0000); 
+            @if(!$id_planta)
+              setTimeout(function(){$('#myModal').modal('show'); },0000); 
+            @endif
 
 
             $(function() {
