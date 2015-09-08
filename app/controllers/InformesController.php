@@ -62,9 +62,20 @@ class InformesController extends BaseController {
 	}
 
 	public function PorDia(){
-		$start = new DateTime(Input::get('fecha'));		
-		$reservas = Reservas::where('fecha', $start)
-					->select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora')->get();
+		$start = new DateTime(Input::get('fecha'));	
+		$id_planta = Input::get('id_planta');
+		
+		if($id_planta){
+			$planta = Plantas::find($id_planta)->nombre;
+			$reservas = Reservas::where('fecha', $start)
+				->where('planta', $planta)
+				->select('nombre','email', 'telefono', 'patente', 'tipo_vehiculo', 'planta', 'fecha', 'hora')->get();
+		}else{
+			$reservas = Reservas::where('fecha', $start)
+				->select('nombre','email', 'telefono', 'patente', 'tipo_vehiculo', 'planta', 'fecha', 'hora')->get();
+		}
+		
+		
 		Excel::create('Reservas Por Día', function($excel) use($reservas){
     		$excel->sheet('Reservas', function($sheet) use($reservas) {
 	        	$sheet->fromModel($reservas);
@@ -76,6 +87,11 @@ class InformesController extends BaseController {
 
 	public function PorDiaGet(){
 		$fecha = date("d-m-Y");
-		return View::make('reservas.pordia')->with('fecha',$fecha);
+		$plantas = Plantas::all();
+		return View::make('reservas.pordia')
+						->with('plantas', $plantas)
+						->with('planta', '')
+						->with('id_planta','')
+						->with('fecha',$fecha);
 	}
 }

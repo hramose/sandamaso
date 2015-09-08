@@ -171,7 +171,6 @@
                         if($('#fecha_d').val() == ''){
                             inicio.innerHTML = "Fecha Desde (*)";
                             inicio.style.color = "red";
-                            alert($('#fecha_dl').val())
                         }
 
                         if($('#fecha_h').val() == ''){

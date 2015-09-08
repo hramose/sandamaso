@@ -108,7 +108,7 @@
     </header>
     <div class="container">
       <h1>
-        Agenda tu revision
+        Reserve su hora - Plantas de Revisión Técnica
       </h1>
     </div>
 
