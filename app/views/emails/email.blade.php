@@ -61,9 +61,18 @@
 						{{ $fecha }} {{ $hora }}
 					</td>
 					</tr>
+					<tr>
+					<th>
+						Vehículo
+					</th>
+					<td>
+						{{ $tipo_vehiculo }}, patente {{ $patente }}
+					</td>
+					</tr>
 				</tbody>
 				</table>
 				<h1>Gracias por su preferencia</h1>
+				<p>Debe presentar este correo al momento de presentarse en la planta de revisión</p>
 			</div>
 		</div>
 	</body>

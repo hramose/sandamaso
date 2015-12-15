@@ -5,29 +5,29 @@
 @stop
 
 @section('content')
+    @if(count($horas_reservar) != 0)
        {{ Form::open(array('url' => 'reservas/reservar', 'id'=>'form_reserva')) }}
     <input type="hidden" name="fecha" value="{{ $fecha }}" />
     <input type="hidden" name="hora" id="hora" value="" />
     <input type="hidden" name="planta" value="{{ $planta }}" />
+    <input type="hidden" name="convenio" value="{{ $convenio }}" />
     <div class="row">
         <div class="col-md-12">
-            <h3>Horas disponibles para {{ $planta }} el {{ date('d-m-Y',strtotime($fecha)) }}</h3>
+            <h3>Horas disponibles para {{ $nombre_planta }} el {{ date('d-m-Y',strtotime($fecha)) }}
+           @if($convenio=='1') Con Convenio @endif 
+            </h3>
             <p>Patente: {{ $patente }}</p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                @if(count($horas_reservar) == 0)
-                    <label for="">Reservas llenas, vuelva a buscar otra fecha.</label>
-                @else
                     <label for="" id="hora_l">Selecciona la hora de la reserva</label>
                     <div class="btn-group" role="group" aria-label="...">
                           @foreach($horas_reservar as $item)
                             <button type="button" class="btn btn-default hora_select">{{ $item }}</button>
                           @endforeach
                     </div>
-                @endif
             </div>
            
         </div>
@@ -64,6 +64,7 @@
                   <option value="Automovil">Automovil</option>
                   <option value="Camioneta">Camioneta</option>
                   <option value="Motocicleta">Motocicleta</option>
+                  <option value="Carro de Arrastre">Carro de Arrastre</option>
                 </select>
             </div>
         </div>
@@ -74,13 +75,16 @@
     <div class="row">
         <div class="col-md-12">
 <div class="text-center">
-            <button type="button" id="reservar" class="btn btn-primary">Reservar</button>
-
+        <button type="button" id="reservar" class="btn btn-primary">Reservar</button>
         <a href="{{ URL::to('/') }}" class="btn btn-default">Volver a Buscar</a>
 </div>
         </div>
     </div>
     {{ Form::close() }}
+    @else
+     <div class="alert alert-danger" id="" role="alert"><strong>Reservas llenas, vuelva a buscar otra fecha.</strong></div>
+     <a href="{{ URL::to('/') }}" class="btn btn-default">Volver a Buscar</a>
+    @endif
 
 <script type="text/javascript">
 $(function() {

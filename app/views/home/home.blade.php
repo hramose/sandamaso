@@ -4,7 +4,27 @@
 @stop
 
 @section('content')
+
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Mapa</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 {{ Form::open(array('url' => 'reservas/buscar', 'id'=>'form_busca')) }}
+
 
 
 
@@ -18,25 +38,13 @@
             <div class="modal-body">
                 <p style="margin-bottom: 25px;"><strong>Asegure una atención más expedita haciendo reserva de día y hora de atención.</strong></p>
 
-                <p>Reservas se realizaran desde el día 5 al día 25 de cada mes, de lunes a viernes.
-                    Servicio para vehículos con dígito de placa patente correspondiente al mes en curso o mes anticipado.
-                    Nos contactaremos con usted para confirmar el requerimiento, dentro de 12 horas de recibido su mensaje hasta la hora de cierre.</p>
+                <p>Nos contactaremos con usted para confirmar el requerimiento, dentro de 12 horas de recibido su mensaje hasta la hora de cierre.</p>
 
-                    <p>También solicite reserva para <a href="#" style="
+                    <p>También solicite reserva para <a href="http://www.sandamaso.cl/revision/pre-revision-tecnica/" style="
                         color: #138CD9;
                         text-decoration: none;
                         transition: all 0.2s linear 0s;
-                        ">Servicio de Pre Revisión</a> y verifique el estado de su vehículo cuando usted quiera.</p>
-
-                        <p>Además participe en un sorteo especial entre todos los clientes que agenden revisión. </p>
-
-                        <p><a href="#" style="
-                            color: #138CD9;
-                            text-decoration: none;
-                            transition: all 0.2s linear 0s;
-                            ">Ver Bases del concurso</a></p>
-
-                        </p>Llene los campos y nos contactaremos para agendar su revisión técnica.</p>
+                        ">Servicio de Revisión Previa</a> y verifique el estado de su vehículo cuando usted quiera.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
@@ -62,6 +70,7 @@
             </div>
         </div>
         <div class="row form_1 {{ $patente == '' ? 'hide' : '' }}">
+            <h2 style="color:red">Recuerde no tomar hora los días feriados.</h2>
             <div class="col-md-12" style="    margin: 30px 0;">
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
@@ -92,6 +101,11 @@
                         <label class="hide" id="planta_alert" style="color:red">Debe seleccionar una planta</label>
                     </div>
                     <input type="hidden" name="id_planta" id="id_planta" value="{{ $id_planta == '' ? '' : $id_planta }}" />
+                    <div class="checkbox hide" id="div_convenio">
+                        <label>
+                            <input type="checkbox" name="convenio" @if($convenio == '1') checked @endif> Con Convenio
+                        </label>
+                    </div>
                 </div>
                 <button type="button" id="btn_submit" class="btn btn-primary">Buscar</button>
             </div>
@@ -101,20 +115,17 @@
                 <div class="col-sm-12">
                     <br/>
                     <div class="panel panel-default">
-                        <!-- Default panel contents -->
                         <div class="panel-heading">Fechas con horas disponibles</div>
                         <div class="panel-body">
                             <p>Haz click sobre una fecha para ver las horas disponibles.</p>
                         </div>
-
-                        <!-- Table -->
                         <table class="table">
                             <tbody>
                                 @foreach(array_chunk($fechas_reservar, 5) as $items)
                                 <tr>
                                     @foreach($items as $item)
                                     <td> 
-                                        <a href="{{ URL::to('/') }}/horasdisponibles/{{ $item }}/{{ $id_planta }}/{{ $patente }}" class="btn btn-default">{{ date('d-m-Y', strtotime($item)) }}</a>
+                                        <a href="{{ URL::to('/') }}/horasdisponibles/{{ $item }}/{{ $id_planta }}/{{ $patente }}/{{ $convenio }}" class="btn btn-default">{{ date('d-m-Y', strtotime($item)) }}</a>
                                     </td>
                                     @endforeach
                                 </tr>
@@ -148,6 +159,11 @@
                 $('.val_planta').click(function(){
                     var texto = $(this).text();
                     $('#id_planta').val($(this).attr('data-val'));
+                    if($(this).attr('data-val') == 1){
+                        $('#div_convenio').addClass('hide');
+                    }else{
+                        $('#div_convenio').removeClass('hide');
+                    }
                     $('#planta_nombre').text(texto);
                 });
 
@@ -277,88 +293,94 @@ function validaDate(){
     var d = new Date();
     var m = d.getMonth() + 1;
     var y = d.getFullYear();
-    var entra = true;
-
+    var entra = false;
 //meses
 switch(m) {
     case 1:
-    if(ultimo != 9 || ultimo != 0){
-        entra = false;
+    if(ultimo == 9 || ultimo == 0){
+        entra = true;
     }
     break;
     case 2:
-if(ultimo != 0 || ultimo != 1){ // 9
-    entra = false;
-}
-break;
-case 3:
-if(ultimo != 1){ // 0 y 9
-    entra = false;
-}
-break;
-case 4:
-if(ultimo != 1 || ultimo != 2){ // 0 y 9
-    entra = false;
-}
-break;
-case 5:
-if(ultimo != 2 || ultimo != 3){ // 1 , 0 y 9
-    entra = false;
-}
-break;
-case 6:
-if(ultimo != 3 || ultimo != 4){ // 9,0,1 y 2
-    entra = false;
-}
-break;
-case 7:
-if(ultimo != 4 || ultimo != 5){
-    entra = false;
-}
-break;
-case 8:
-if(ultimo != 5 || ultimo != 6){
-    entra = false;
-}
-break;
-case 9:
-if(ultimo != 6 || ultimo != 7){
-    entra = false;
-}
-break;
-case 10:
-if(ultimo != 7 || ultimo != 8){
-    entra = false;
-}
-break;
-case 11:
-if(ultimo != 8){
-    entra = false;
-}
-break;
-case 12:
-if(ultimo != 9){
-    entra = false;
-}
-break;
-default:
-break;
-}
-return entra;
+    if(ultimo == 0 || ultimo == 1){ // 9
+        entra = true;
+    }
+    break;
+    case 3:
+    if(ultimo == 1){ // 0 y 9
+        entra = true;
+    }
+    break;
+    case 4:
+    if(ultimo == 1 || ultimo == 2){ // 0 y 9
+        entra = true;
+    }
+    break;
+    case 5:
+    if(ultimo == 2 || ultimo == 3){ // 1 , 0 y 9
+        entra = true;
+    }
+    break;
+    case 6:
+    if(ultimo == 3 || ultimo == 4){ // 9,0,1 y 2
+        entra = true;
+    }
+    break;
+    case 7:
+    if(ultimo == 4 || ultimo == 5){
+        entra = true;
+    }
+    break;
+    case 8:
+    if(ultimo == 5 || ultimo == 6){
+        entra = true;
+    }
+    break;
+    case 9:
+    if(ultimo == 6 || ultimo == 7){
+        entra = true;
+    }
+    break;
+    case 10:
+    if(ultimo == 7 || ultimo == 8){
+        entra = true;
+    }
+    break;
+    case 11:
+    if(ultimo == 8){
+        entra = true;
+    }
+    break;
+    case 12:
+    if(ultimo == 9){
+        entra = true;
+    }
+    break;
+    default:
+    break;
+    }
+    return entra;
 }
 
 
 $('#btn_patente').click(function(){
-    if(validaForm() || validaDate()){
-        $('.form_1').removeClass('hide');
-        $('#formato').addClass('hide');
-
+    if(validaForm()){
+        //if(validaDate()){
+            $('.form_1').removeClass('hide');
+            $('#formato').addClass('hide');
+        /*}else{
+            $('.form_1').addClass('hide');
+            $('#formato').removeClass('hide').html('No es posible reservar este mes. Favor consultar el mes correspondiente en <a href="http://www.sandamaso.cl/servicios/calendario-de-atencion/">Calendario de Atención</a> ');
+        }*/
+    }else{
+        $('.form_1').addClass('hide');
+        $('#formato').removeClass('hide');
     }
 });
 var today = new Date();
 $('.datepicker').datepicker({
     format: 'dd-mm-yyyy', 
-    startDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()), 
+    startDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()+1), 
     endDate: '+1m', 
     autoclose: true
 });

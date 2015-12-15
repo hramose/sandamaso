@@ -14,7 +14,7 @@
 //app reserva de horas
 Route::get('/','HomeController@Index');
 Route::post('reservas/buscar','HomeController@BuscarReserva');
-Route::get('/horasdisponibles/{fecha}/{planta}/{patente}','HomeController@HorasDisponibles');
+Route::get('/horasdisponibles/{fecha}/{planta}/{patente}/{convenio}','HomeController@HorasDisponibles');
 Route::post('reservas/reservar','HomeController@Reservar');
 
 
