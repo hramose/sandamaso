@@ -57,7 +57,7 @@ return array(
         	'host'      => 'localhost',
         	'database'  => 'san_damasco',
         	'username'  => 'root',
-        	'password'  => 'root',
+        	'password'  => 'root',//rZ7MgWNvdI
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

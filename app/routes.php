@@ -23,9 +23,15 @@ Route::get('/admin','HomeController@IndexAdmin');
 Route::post('/login','HomeController@Login');
 Route::get('/logout','HomeController@Logout');
 Route::get('/reservas/list','HomeController@ListarReservas');
+Route::get('/reservas/delete/{id}','HomeController@DeleteReservas');
 Route::any('/reservas/crud','HomeController@CrudReservas');
 Route::get('/plantas/list','HomeController@ListarPlantas');
 Route::any('/plantas/crud','HomeController@CrudPlantas');
+Route::get('/plantas/horas/{id}/list','HomeController@ListarPlantasHoras');
+Route::any('/plantas/horas/{id}/crud','HomeController@CrudPlantasHoras');
+Route::get('/plantas/horas_weekend/{id}/list','HomeController@ListarPlantasHorasWeekend');
+Route::any('/plantas/horas_weekend/{id}/crud','HomeController@CrudPlantasHorasWeekend');
+
 
 
 //informes

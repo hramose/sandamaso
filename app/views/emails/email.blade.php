@@ -42,7 +42,7 @@
 		<div class="container">
 			<img src="http://www.sandamaso.cl/wp-content/themes/sandamaso/images/logo-footer.png" height="30" width="80" />
 			<div class="content">
-				<div class="title">{{ $nombre }} tu hora a sido reservada</div>
+				<div class="title">{{ $nombre }} tu hora ha sido reservada</div>
 				<table>
 				<tbody>
 					<tr>

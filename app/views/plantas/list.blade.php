@@ -6,6 +6,56 @@
 @section('content')
 <div class="container-fluid">
     {{ $filter }}
-    {{ $grid }}
+    
+    <table class="table table-striped">
+    <thead>
+    <tr>
+                 <th>
+                                                <a href="{{ URL::to('/') }}/plantas/list?ord=nombre">
+                        <span class="glyphicon glyphicon-arrow-up"></span>
+                    </a>
+                                                    <a href="{{ URL::to('/') }}/plantas/list?ord=-nombre">
+                        <span class="glyphicon glyphicon-arrow-down"></span>
+                    </a>
+                                             Nombre
+            </th>
+                 <th>
+                                             Sabados
+            </th>
+                 <th>
+                                             Primeros/Ultimos días
+            </th>
+                 <th>
+                                             Numero de Días
+            </th>
+            <th>
+                            Horas Semana
+            </th>
+            <th>
+                            Horas Fin de Semana
+            </th>
+                 <th>
+                            Editar
+            </th>
+         </tr>
+    </thead>
+    <tbody>
+    	@foreach ($grid->data as $item)
+            <tr>
+                        <td>{{ $item->nombre }}</td>
+                        <td>{{ $item->sabados }}</td>
+                        <td>{{ $item->dias_restriccion }}</td>
+                        <td>{{ $item->num_dias }}</td>
+                        <td><a class="" title="" href="{{ URL::to('/') }}/plantas/horas/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
+                        </td>
+                        <td><a class="" title="" href="{{ URL::to('/') }}/plantas/horas_weekend/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
+                        </td>
+                        <td><a class="" title="Modify" href="{{ URL::to('/') }}/plantas/crud?modify={{$item->id}}"><span class="glyphicon glyphicon-edit"> </span></a>
+						</td>
+            </tr>
+        @endforeach
+        </tbody>
+</table>
+{{ $grid->links() }}
 </div>
 @stop

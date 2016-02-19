@@ -1,4 +1,4 @@
- <div class="alert hide alert-danger" id="hora_alert" role="alert"><strong>Debe verificar los campos con un asteriscos (*)</strong></div>
+ <div class="alert hide alert-danger" id="hora_alert" role="alert"><strong>Debe verificar los campos con un asteriscos (*)</strong></div> 
  @extends('layout')
 
 @section('head')
