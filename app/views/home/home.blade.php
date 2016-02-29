@@ -70,7 +70,8 @@
             </div>
         </div>
         <div class="row form_1 {{ $patente == '' ? 'hide' : '' }}">
-            <h2 style="color:red">Recuerde no tomar hora los días feriados.</h2>
+            <h2 style="color:red">Recuerde no reservar hora los días feriados.</h2>
+            <p>Disponemos de 3 meses para reserva de hora</p>
             <div class="col-md-12" style="    margin: 30px 0;">
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
@@ -381,7 +382,7 @@ var today = new Date();
 $('.datepicker').datepicker({
     format: 'dd-mm-yyyy', 
     startDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()+1), 
-    endDate: '+1m', 
+    endDate: '+3m', 
     autoclose: true
 });
 });

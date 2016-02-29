@@ -23,6 +23,9 @@
 <p>Nombre: {{ $nombre }}</p>
 <p>Fecha: {{ date('d-m-Y',strtotime($fecha)) }} {{ $hora }}</p>
 <p>Planta: {{ $planta }}</p>
+<br>
+<br>
+<p>Recuerde llegar con 10 minutos de anticipación para una mejor atención, de lo contrario si llegase pasado 10 minutos de su hora, esta será invalidada.</p>
 <h3>Gracias por su preferencia.</h3>
 </div>
 </div>

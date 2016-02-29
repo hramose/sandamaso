@@ -71,6 +71,7 @@
 					</tr>
 				</tbody>
 				</table>
+				<p>Recuerde llegar con 10 minutos de anticipación para una mejor atención, de lo contrario si llegase pasado 10 minutos de su hora, esta será invalidada.</p>
 				<h1>Gracias por su preferencia</h1>
 				<p>Debe presentar este correo al momento de presentarse en la planta de revisión</p>
 			</div>

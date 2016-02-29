@@ -163,11 +163,14 @@ class HomeController extends BaseController {
 		$fecha1=null;
 		$fecha2=null;
 		if(Input::get('fecha')[0] != ''){
-			$fecha1 = date('Y-d-m', strtotime(Input::get('fecha')[0]));
+			$date = str_replace('/', '-', Input::get('fecha')[0]);
+			$fecha1 = date('Y-m-d', strtotime($date));
 		}
-		if(Input::get('fecha')[1] != ""){
-			$fecha2 = date('Y-d-m', strtotime(Input::get('fecha')[1]));
+		if(Input::get('fecha')[1] != ''){
+			$date = str_replace('/', '-', Input::get('fecha')[1]);
+			$fecha2 = date('Y-m-d', strtotime($date));
 		}
+		//echo Input::get('fecha')[1];
 		$filter = DataFilter::source(new Reservas);
 		$filter->link('/informes/general/'.Input::get('planta').'/'.$fecha1.'/'.$fecha2,'Exportar', 'TR');
 		$filter->attributes(array('class'=>'form-inline'));
