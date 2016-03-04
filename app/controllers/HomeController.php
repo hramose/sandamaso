@@ -207,16 +207,16 @@ class HomeController extends BaseController {
     }
 
     public function DeleteReservas($id){
-    	$reserva = Reservas::find($id)->delete();
-
-    	$fechasConvenio = FechasReservas::where('id_reservas', $id)->first();
+    	$reserva = Reservas::find($id)->delete();    	
+    	$fechasConvenio = FechasReservasConvenio::where('id_reservas', $id)->first();
     	if($fechasConvenio){
-    		$horasConvenio = HorasConvenio::where('id_fecha', $fechasConvenio->id)->delete();
-    		$fechasConvenio->delete();
+    		//$horasConvenio = HorasConvenio::where('id_fecha', $fechasConvenio->id)->delete();
+    		//$fechasConvenio->delete();
     	}
 
-    	$fechas = FechasReservasConvenio::where('id_reservas', $id)->first();
+    	$fechas = FechasReservas::where('id_reservas', $id)->first();
     	if($fechas){
+    		//echo 'encuentra fechasReservas';
     		$horas = Horas::where('id_fecha', $fechas->id)->delete();
     		$fechas->delete();
     	}
@@ -546,8 +546,7 @@ class HomeController extends BaseController {
 		$count_reserva = Reservas::where('email', $email)
 							->where('patente', $patente)
 							->where('fecha', $fecha)->count();
-		//echo $count_reserva;
-
+		
 		if($count_reserva == 0)
 		{
 		$reserva = new Reservas;
@@ -564,13 +563,18 @@ class HomeController extends BaseController {
 		$reserva->hora = $hora;
 		$reserva->ip = $ip;
 		$reserva->save();
-
-		$num_fecha = Horas::where('fecha', $fecha)->count();
+		
+		if($convenio == '1'){
+		$num_fecha = HorasConvenio::where('fecha', $fecha)->where('id_planta', $id_planta)->count();
+		}else{
+		$num_fecha = Horas::where('fecha', $fecha)->where('id_planta', $id_planta)->count();
+		}
 		//crear tabla horas por planta y asignar las horas de cada planta
 		//cada vez q se llenen las horas comparar según planta y ver el total de horas reservadas
 		//si son iguales, se debe agregar lleno al día
 		$lleno = 0;
 		$num_total = PlantasHoras::where('id_planta', $id_planta)->count();
+	
 		if($num_fecha >= $num_total){
 			$lleno = 1;
 		}
@@ -596,12 +600,14 @@ class HomeController extends BaseController {
 			$horas->horas = $hora;
 			$horas->fecha = $fecha;
 			$horas->id_fecha = $fechas->id;
+			$horas->id_planta = $id_planta;
 			$horas->save();
 		}else{
 			$horas = new Horas;
 			$horas->horas = $hora;
 			$horas->fecha = $fecha;
 			$horas->id_fecha = $fechas->id;
+			$horas->id_planta = $id_planta;
 			$horas->save();
 		}
 
