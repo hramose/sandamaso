@@ -16,6 +16,7 @@ Route::get('/','HomeController@Index');
 Route::post('reservas/buscar','HomeController@BuscarReserva');
 Route::get('/horasdisponibles/{fecha}/{planta}/{patente}/{convenio}','HomeController@HorasDisponibles');
 Route::post('reservas/reservar','HomeController@Reservar');
+Route::post('email-to-share','HomeController@EmailToShare');
 
 
 //admin app

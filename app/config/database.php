@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
         	'host'      => 'localhost',
-        	'database'  => 'sandamaso',
+        	'database'  => 'san_damasco',
         	'username'  => 'root',
-        	'password'  => 'mk73a9o3dani',//rZ7MgWNvdI
+        	'password'  => 'root',//rZ7MgWNvdI
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

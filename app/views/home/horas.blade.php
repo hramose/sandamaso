@@ -50,34 +50,45 @@
         </div>
         <div class="col-md-12">
             <div class="col-md-6">
-            <div class="form-group">
-                <label for="telefono" id="telefono_l">Telefono</label>
-                <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Telefono" required>
+                <div class="form-group">
+                    <label for="telefono" id="telefono_l">Telefono</label>
+                    <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Telefono" required>
+                </div>
             </div>
-        </div>
         
             <div class="col-md-6">
-            <div class="form-group">
-                <label for="tipo_vehiculo" id="tipo_l">Tipo de Vehículo</label>
-                <select class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" >
-                    <option value="">Seleccione una opción</option>
-                  <option value="Automovil">Automovil</option>
-                  <option value="Camioneta">Camioneta</option>
-                  <option value="Motocicleta">Motocicleta</option>
-                  <option value="Carro de Arrastre">Carro de Arrastre</option>
-                </select>
+                <div class="form-group">
+                    <label for="tipo_vehiculo" id="tipo_l">Tipo de Vehículo</label>
+                    <select class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" >
+                        <option value="">Seleccione una opción</option>
+                      <option value="Automovil">Automovil</option>
+                      <option value="Camioneta">Camioneta</option>
+                      <option value="Motocicleta">Motocicleta</option>
+                      <option value="Carro de Arrastre">Carro de Arrastre</option>
+                    </select>
+                </div>
             </div>
         </div>
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="captcha" id="captcha_l">2 + {{ $num }}</label>
+                    <input type="text" name="captcha" class="form-control" id="captcha" 
+                            placeholder="Ingrese el resultado de la suma" required>
+                </div>
+            </div>
+
     </div>
-</div>
+    
+
         <input type="hidden" value="{{ $patente }}" name="patente" id="patente" placeholder="Patente" >
     </div>
     <div class="row">
+        <br><br>
         <div class="col-md-12">
-<div class="text-center">
-        <button type="button" id="reservar" class="btn btn-primary">Reservar</button>
-        <a href="{{ URL::to('/') }}" class="btn btn-default">Volver a Buscar</a>
-</div>
+        <div class="text-center">
+            <button type="button" id="reservar" class="btn btn-primary">Reservar</button>
+            <a href="{{ URL::to('/') }}" class="btn btn-default">Volver a Buscar</a>
+        </div>
         </div>
     </div>
     {{ Form::close() }}
@@ -97,6 +108,7 @@ $(function() {
  var email = document.getElementById("email_l");
  var telefono = document.getElementById("telefono_l");
  var tipo_l = document.getElementById('tipo_l');
+ var captcha_l = document.getElementById('captcha_l');
 
 
  hora.innerHTML = "Selecciona la hora de la reserva";
@@ -104,15 +116,18 @@ $(function() {
  email.innerHTML = "Email";
  nombre.innerHTML = "Nombre";
  tipo_l.innerHTML = "Tipo Vehículo";
+ captcha_l.innerHTML = "2 + "+{{ $num }};
  hora.style.color = "black";
  telefono.style.color = "black";
  email.style.color = "black";
  nombre.style.color = "black";
  tipo_l.style.color = "black";
+ captcha_l.style.color = "black";
 
 
 
-        if($('#hora').val() == "" || $('#nombre').val() =='' || $('#email').val() =='' || $('#telefono').val() =='' || $('#tipo_vehiculo').val() == ""){
+        if($('#hora').val() == "" || $('#nombre').val() =='' || $('#email').val() =='' || $('#telefono').val() =='' || $('#tipo_vehiculo').val() == "" || parseInt($('#captcha').val()) != parseInt({{ $num+2 }}))
+        {
             $('#hora_alert').removeClass('hide');
             if($('#hora').val() == "")
             {
@@ -150,12 +165,18 @@ $(function() {
 
             }
 
+            if(parseInt($('#captcha').val()) != parseInt({{ $num+2 }}))
+            {
+                captcha_l.innerHTML = "2 + "+{{ $num }}+" (*)";
+                captcha_l.style.color = "red";
+            }
+
 
         }else
         {
             $('#hora_alert').addClass('hide');
             
-            if($('#nombre').val() == "" || $('#email').val() == "" || $('#telefono').val() == "" || $('#tipo_vehiculo').val() == ""){
+            if($('#nombre').val() == "" || $('#email').val() == "" || $('#telefono').val() == "" || $('#tipo_vehiculo').val() == "" || $('#captcha').val() == ""){
                 $('#campos_alert').removeClass('hide');
             }else{
                 $('#campos_alert').addClass('hide');

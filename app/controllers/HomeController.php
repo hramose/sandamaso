@@ -319,177 +319,6 @@ class HomeController extends BaseController {
 		if($this->isWeekend($fecha)){
 			$horas = PlantasHorasWeekend::where('id_planta', $planta)->lists('hora_planta');
 		}
-
-
-		/*if($planta == '1'){
-			$horas = array(
-				'08:00','08:30',
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00','15:00',
-				'15:30','16:00',
-				'16:30','17:00',
-				'17:30'
-				);	
-			if($this->isWeekend($fecha)){
-				$horas = array(
-						'08:30',
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00'
-				);
-			}
-		}
-		if($planta == '2' || $planta == '3'){
-			$horas = array(
-			'09:00','09:30',
-			'10:00','10:30',
-			'11:00','11:30',
-			'12:00','12:30',
-			'13:00','13:30',
-			'14:00','14:30',
-			'15:00','15:30',
-			'16:00','16:30'
-			);
-		}
-		if($planta == '4'){
-			$horas = array(
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00','15:00',
-				'15:30','16:00',
-				'16:30','17:00',
-				'17:30','18:00',
-				'18:30'
-				);	
-			if($this->isWeekend($fecha)){
-				$horas = array(
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00','13:30'
-				);
-			}
-		}
-		if($planta == '5'){
-			$horas = array(
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00','13:30',
-				'14:00','14:30',
-				'15:00','15:30',
-				'16:00','16:30',
-				'17:00','17:30'
-				);
-			if($this->isWeekend($fecha)){
-				$horas = array(
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00','13:30'
-				);
-			}
-		}
-		if($planta == '6'){
-			$horas = array(
-				'08:00','08:15',
-				'08:30','08:45',
-				'09:00','09:15',
-				'09:30','09:45',
-				'10:00','10:15',
-				'10:30','10:45',
-				'11:00','11:15',
-				'11:30','11:45',
-				'12:00','12:15',
-				'12:30','12:45',
-				'13:00','13:15',
-				'13:30','13:45',
-				'14:00','14:15',
-				'14:30','14:45',
-				'15:00','15:15',
-				'15:30','15:45',
-				'16:00','16:15',
-				'16:30','16:45',
-				'17:00','17:15',
-				'17:30'
-				);
-			if($this->isWeekend($fecha)){
-				$horas = array(
-				'08:00','08:15',
-				'08:30','08:45',
-				'09:00','09:15',
-				'09:30','09:45',
-				'10:00','10:15',
-				'10:30','10:45',
-				'11:00','11:15',
-				'11:30','11:45',
-				'12:00','12:15',
-				'12:30','12:45',
-				'13:00','13:15',
-				'13:30','13:45',
-				'14:00','14:15',
-				'14:30','14:45',
-				'15:00','15:15',
-				'15:30'
-				);
-			}
-		}
-		if($planta == '7'){
-			$horas = array(
-				'08:00','08:30',
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00','13:30',
-				'14:00','14:30',
-				'15:00','15:30',
-				'16:00','16:30',
-				'17:00','17:30'
-				);
-			if($this->isWeekend($fecha)){
-				$horas = array(
-				'08:30',
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00'
-				);
-			}
-		}
-		if($planta == '8'){
-			$horas = array(
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00','13:30',
-				'14:00','14:30',
-				'15:00','15:30',
-				'16:00','16:30',
-				'17:00','17:30'
-				);
-			if($this->isWeekend($fecha)){
-				$horas = array(
-				'09:00','09:30',
-				'10:00','10:30',
-				'11:00','11:30',
-				'12:00','12:30',
-				'13:00'
-				);
-			}
-		}*/
 		$nombre_planta = Plantas::find($planta)->nombre;
 		if($convenio == '1'){
 		$horas_ocupadas = HorasConvenio::where('horas_convenio.fecha', $fecha)
@@ -511,11 +340,14 @@ class HomeController extends BaseController {
 			}
 		}
 
+		$num = mt_rand(1, 10);
+
 		return View::make('home.horas')->with('horas_reservar', $horas_reservar )
 										->with('fecha', $fecha)
 										->with('nombre_planta', $nombre_planta)
 										->with('convenio', $convenio)
 										->with('patente', $patente)
+										->with('num', $num)
 										->with('planta', $planta);
 	}
 
@@ -618,7 +450,8 @@ class HomeController extends BaseController {
                 "hora"=>$hora,
                 "planta"=>$planta,
                 "tipo_vehiculo"=>$tipo_vehiculo,
-                "patente"=>$patente
+                "patente"=>$patente,
+                "id_planta"=>$id_planta
                 );
 
 		 $dataadmin = array(
@@ -685,11 +518,25 @@ class HomeController extends BaseController {
 										->with('fecha', $fecha)
 										->with('planta', $planta)
 										->with('email', $email)
-										->with('hora', $hora);
+										->with('hora', $hora)
+										->with('id_planta', $id_planta);
 		}else{
 
 			 return View::make('home.ocupada');
 		}
 		
+	}
+
+
+	public function EmailToShare(){
+
+		$email = Input::get('email');
+		$data = array();
+		Mail::send('emails.share', $data, function($message) use ($email){
+	          	$message->from('no-reply@sandamaso.cl', 'San Damaso');
+	            $message->to($email, 'test')->subject('Reserva tu hora.');
+	    });
+
+		return Response::json(array('success' => 'true'));
 	}
 }
