@@ -26,10 +26,12 @@
 				<br>
 				<p>Recuerde llegar con 10 minutos de anticipación para una mejor atención, de lo contrario si llegase pasado 10 minutos de su hora, esta será invalidada.</p>
 				<p>¿Cómo llegar?</p>
-				<?php switch($id_planta){
+				<iframe src="{{ $url_map }}" width="640" height="480"></iframe>
+				<?php 
+				/*switch($id_planta){
 					case 1:
 						//Valparaiso B
-						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.kJgb9bHkY3vQ" width="640" height="480"></iframe>';
+						echo '';
 						break;
 					case 2:
 						//Antofagasta
@@ -61,7 +63,7 @@
 						break;
 					default:
 						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.koRQoFack-g8" width="640" height="480"></iframe>';
-					} ?>
+					}*/ ?>
 			<h3>Gracias por su preferencia.</h3>
 			<div class="panel panel-success">
 				<div class="form-group form-email">

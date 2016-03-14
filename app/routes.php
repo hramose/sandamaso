@@ -11,8 +11,12 @@
 |
 */
 
+Route::get('/', function()
+{
+    return 'Sistema en mantención, vuelva a intentarlo más tarde.';
+});
 //app reserva de horas
-Route::get('/','HomeController@Index');
+//Route::get('/','HomeController@Index');
 Route::post('reservas/buscar','HomeController@BuscarReserva');
 Route::get('/horasdisponibles/{fecha}/{planta}/{patente}/{convenio}','HomeController@HorasDisponibles');
 Route::post('reservas/reservar','HomeController@Reservar');
@@ -40,3 +44,6 @@ Route::get('/informes/general/{planta?}/{fecha_desde?}/{fecha_hasta?}','Informes
 Route::get('/informes/general//{fecha_desde?}/{fecha_hasta?}','InformesController@GeneralFechas');
 Route::get('/informes/pordiaget','InformesController@PorDiaGet');
 Route::post('/informes/pordia','InformesController@PorDia');
+
+//crontab
+Route::get('/email/remember','InformesController@SendRememberEmail');

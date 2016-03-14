@@ -54,14 +54,15 @@
 				<p><b>Patente:</b> {{ $patente }}</p>
 
 				<p><u>¿Cómo llegar?</u></p>
-
+				<a href="{{ $url_map }}">Click  para ver el mapa</a>
+				<br>
+				<img src="{{ $image_map }}" />
 				
-				<?php switch($id_planta){
+				<?php 
+				/*switch($id_planta){
 					case 1:
 						//Valparaiso B
-						echo '<a href="https://www.google.com/maps/d/u/0/viewer?mid=zScdsfNHORgo.kJgb9bHkY3vQ">Click acá para ver el mapa</a>
-							<br>
-						<img src="'.asset("img/plantas/valparaiso.png").'" />';
+						echo '';
 						break;
 					case 2:
 						//Antofagasta
@@ -109,7 +110,7 @@
 						echo '<a href="https://www.google.com/maps/d/u/0/viewer?mid=zScdsfNHORgo.koRQoFack-g8">Click para ver el mapa</a>
 						<br>
 						<img src="'.asset("img/plantas/colina.png").'" />';
-					} ?>
+					} */?>
 
 				<p>Gracias por su preferencia!</p>
 

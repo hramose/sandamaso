@@ -71,7 +71,7 @@
         </div>
             <div class="col-md-12">
                 <div class="col-md-6">
-                    <label for="captcha" id="captcha_l">2 + {{ $num }}</label>
+                    <label for="captcha" id="captcha_l">2 + {{ $num }} =</label>
                     <input type="text" name="captcha" class="form-control" id="captcha" 
                             placeholder="Ingrese el resultado de la suma" required>
                 </div>

@@ -93,7 +93,6 @@ class HomeController extends BaseController {
 								->where('lleno', 1)
 								->where('planta', $planta->nombre)
 								->lists('fecha');
-								//echo $planta->nombre;
 		}
 		
 		$oneday = new DateInterval("P1D");
@@ -138,6 +137,7 @@ class HomeController extends BaseController {
 				$fechas_reservar[] = $item;
 			}
 			$count++;
+			//restricción para mostrar solo 25 días en adelante
 			if($count >= 25){
 				break;
 			}
@@ -184,16 +184,6 @@ class HomeController extends BaseController {
 		$filter->build();
 
 		$grid = DataSet::source($filter);
-	    /*$grid->attributes(array("class"=>"table table-striped"));
-	    $grid->add('nombre','Nombre', true);
-	    $grid->add('email','Email', true);
-	    $grid->add('patente','Patente', true);
-	    $grid->add('planta','Planta', true);
-	    $grid->add('convenio','Convenio', true);
-	    $grid->add('tipo_vehiculo','Tipo Vehículo', true);
-	   	$grid->add('{{ date("d-m-Y",strtotime($fecha)) }}','Fecha', true);
-	   	$grid->add('hora','Hora', true);
-		$grid->edit(url().'/reservas/crud', 'Borrar','delete');*/
 	    $grid->paginate(10);
 	    $grid->build();
 
@@ -210,13 +200,12 @@ class HomeController extends BaseController {
     	$reserva = Reservas::find($id)->delete();    	
     	$fechasConvenio = FechasReservasConvenio::where('id_reservas', $id)->first();
     	if($fechasConvenio){
-    		//$horasConvenio = HorasConvenio::where('id_fecha', $fechasConvenio->id)->delete();
-    		//$fechasConvenio->delete();
+    		$horasConvenio = HorasConvenio::where('id_fecha', $fechasConvenio->id)->delete();
+    		$fechasConvenio->delete();
     	}
 
     	$fechas = FechasReservas::where('id_reservas', $id)->first();
     	if($fechas){
-    		//echo 'encuentra fechasReservas';
     		$horas = Horas::where('id_fecha', $fechas->id)->delete();
     		$fechas->delete();
     	}
@@ -229,21 +218,15 @@ class HomeController extends BaseController {
     public function ListarPlantas(){
 
 		$filter = DataFilter::source(new Plantas);
-		$filter->label('Restricciones');
-		//$filter->link('/plantas/crud', 'Crear Nuevo', 'TR');
+		$filter->label('Plantas');
+		$filter->link('/plantas/crud', 'Crear Nueva Planta', 'TR');
 		$filter->attributes(array('class'=>'form-inline'));
 		$filter->add('nombre','Buscar por nombre', 'text');
 		$filter->submit('Buscar');
 		$filter->reset('Limpiar');
-		//$filter->build();
+		$filter->build();
 
 		$grid = DataGrid::source($filter);
-	    /*$grid->attributes(array("class"=>"table table-striped"));
-	    $grid->add('nombre','Nombre', true);
-	    $grid->add('sabados','Sabados', true);
-	    $grid->add('dias_restriccion','Primeros/Ultimos días', true);
-	    $grid->add('num_dias','Numero de Días', true);
-	    $grid->edit(url().'/plantas/crud', 'Editar','modify');*/
 	    $grid->paginate(10);
 	    $grid->build();
 
@@ -258,6 +241,11 @@ class HomeController extends BaseController {
         $edit->add('sabados','Sabados', 'checkbox');
         $edit->add('dias_restriccion','Primeros/Ultimos Días','checkbox');
         $edit->add('num_dias','Numero de Días','text')->rule('required');
+        $edit->add('url_map','URL Mapa','text');
+        $edit->add('image_map','Imagen Mapa', 'image')
+                        ->rule('mimes:jpeg,png')
+                        ->move('img/plantas/');
+        $edit->add('email_admin','Correo Administrador','text')->rule('required');
 
         return $edit->view('plantas/crud', compact('edit'));
     }
@@ -272,7 +260,8 @@ class HomeController extends BaseController {
 		$grid = DataGrid::source($filter);
 	    $grid->attributes(array("class"=>"table table-striped"));
 	    $grid->add('hora_planta','Hora', true);
-	    $grid->edit(url().'/plantas/horas/'.$id_planta.'/crud', 'Borrar/Editar','modify|delete');
+	    $grid->add('num_reservas','Numero de Reservas', true);
+	    $grid->edit(url().'/plantas/horas/'.$id_planta.'/crud', 'Editar/Borrar','modify|delete');
 
 		return View::make('planta_hora/list', compact('filter', 'grid'));
 	}
@@ -281,6 +270,7 @@ class HomeController extends BaseController {
         $edit = DataEdit::source(new PlantasHoras());
         $edit->link("/plantas/horas/".$id."/list","Lista Horas", "TR")->back();
         $edit->add('hora_planta','Hora', 'text')->rule('required');
+        $edit->add('num_reservas','Numero de Reservas', 'text')->rule('required');
         $edit->add('id_planta', '', 'hidden')->insertValue($id);
 
         return $edit->view('planta_hora/crud', compact('edit'));
@@ -296,7 +286,8 @@ class HomeController extends BaseController {
 		$grid = DataGrid::source($filter);
 	    $grid->attributes(array("class"=>"table table-striped"));
 	    $grid->add('hora_planta','Hora', true);
-	    $grid->edit(url().'/plantas/horas_weekend/'.$id_planta.'/crud', 'Borrar/Editar','modify|delete');
+	    $grid->add('num_reservas','Numero de Reservas', true);
+	    $grid->edit(url().'/plantas/horas_weekend/'.$id_planta.'/crud', 'Editar/Borrar','modify|delete');
 
 		return View::make('planta_hora/list', compact('filter', 'grid'));
 	}
@@ -305,6 +296,7 @@ class HomeController extends BaseController {
         $edit = DataEdit::source(new PlantasHorasWeekend());
         $edit->link("/plantas/horas_weekend/".$id."/list","Lista Horas", "TR")->back();
         $edit->add('hora_planta','Hora', 'text')->rule('required');
+        $edit->add('num_reservas','Numero de Reservas', 'text')->rule('required');
         $edit->add('id_planta', '', 'hidden')->insertValue($id);
 
         return $edit->view('planta_hora/crud', compact('edit'));
@@ -324,11 +316,13 @@ class HomeController extends BaseController {
 		$horas_ocupadas = HorasConvenio::where('horas_convenio.fecha', $fecha)
 						->join('fechas_reservas_convenio', 'horas_convenio.id_fecha', '=', 'fechas_reservas_convenio.id')
 						->where('fechas_reservas_convenio.planta', $nombre_planta)
+						->where('horas_convenio.lleno', 1)
 						->lists('horas_convenio.horas');
 		}else{
 		$horas_ocupadas = Horas::where('horas.fecha', $fecha)
 						->join('fechas_reservas', 'horas.id_fecha', '=', 'fechas_reservas.id')
 						->where('fechas_reservas.planta', $nombre_planta)
+						->where('horas.lleno', 1)
 						->lists('horas.horas');
 		}
 
@@ -356,7 +350,7 @@ class HomeController extends BaseController {
 		$id_planta = Input::get('planta');
 		$fecha = Input::get('fecha');
 		$hora = Input::get('hora');
-		$planta = Plantas::find($id_planta)->nombre;
+		$planta = Plantas::find($id_planta);
 		$nombre = Input::get('nombre');
 		$email = Input::get('email');
 		$telefono = Input::get('telefono');
@@ -382,7 +376,7 @@ class HomeController extends BaseController {
 		if($count_reserva == 0)
 		{
 		$reserva = new Reservas;
-		$reserva->planta = $planta;
+		$reserva->planta = $planta->nombre;
 		$reserva->nombre = $nombre;
 		$reserva->email = $email;
 		$reserva->comentario = $comentario;
@@ -398,9 +392,34 @@ class HomeController extends BaseController {
 		
 		if($convenio == '1'){
 		$num_fecha = HorasConvenio::where('fecha', $fecha)->where('id_planta', $id_planta)->count();
+		$num_hora = HorasConvenio::where('fecha', $fecha)
+									->where('id_planta', $id_planta)
+									->where('horas', $hora)->count();
 		}else{
 		$num_fecha = Horas::where('fecha', $fecha)->where('id_planta', $id_planta)->count();
+		$num_hora = Horas::where('fecha', $fecha)
+						->where('id_planta', $id_planta)
+						->where('horas', $hora)->count();
 		}
+
+		//lleno la hora de la reserva según el dato en la tabla Horas
+		
+		$planta_hora_num = PlantasHoras::where('hora_planta', $hora)
+							->where('id_planta', $id_planta)->first()
+							->num_reservas;
+		if($this->isWeekend($fecha)){
+			$planta_hora_num = PlantasHorasWeekend::where('hora_planta', $hora)
+							->where('id_planta', $id_planta)->first()
+							->num_reservas;
+		}
+
+		$lleno_hora = 0;
+		$num_hora = $num_hora+1;
+		if($num_hora >= $planta_hora_num)
+		{
+			$lleno_hora = 1;
+		}
+
 		//crear tabla horas por planta y asignar las horas de cada planta
 		//cada vez q se llenen las horas comparar según planta y ver el total de horas reservadas
 		//si son iguales, se debe agregar lleno al día
@@ -415,14 +434,14 @@ class HomeController extends BaseController {
 			$fechas = new FechasReservasConvenio;
 			$fechas->fecha = $fecha;
 			$fechas->lleno = $lleno;
-			$fechas->planta = $planta;
+			$fechas->planta = $planta->nombre;
 			$fechas->id_reservas = $reserva->id;
 			$fechas->save();
 		}else{
 			$fechas = new FechasReservas;
 			$fechas->fecha = $fecha;
 			$fechas->lleno = $lleno;
-			$fechas->planta = $planta;
+			$fechas->planta = $planta->nombre;
 			$fechas->id_reservas = $reserva->id;
 			$fechas->save();
 		}
@@ -433,6 +452,7 @@ class HomeController extends BaseController {
 			$horas->fecha = $fecha;
 			$horas->id_fecha = $fechas->id;
 			$horas->id_planta = $id_planta;
+			$horas->lleno = $lleno_hora;
 			$horas->save();
 		}else{
 			$horas = new Horas;
@@ -440,34 +460,29 @@ class HomeController extends BaseController {
 			$horas->fecha = $fecha;
 			$horas->id_fecha = $fechas->id;
 			$horas->id_planta = $id_planta;
+			$horas->lleno = $lleno_hora;
 			$horas->save();
 		}
+
+		//busca el correo por base de datos
+		$email_admin = array('dan.avila7@gmail.com');
+        $email_admin = $planta->email_admin;
+        $url_map = $planta->url_map;
+        $image_map = $planta->image_map;
 
 		 $data = array(
           		"nombre"=>$nombre,
                 "fecha"=>$fecha,
                 "email"=>$email,
                 "hora"=>$hora,
-                "planta"=>$planta,
+                "planta"=>$planta->nombre,
                 "tipo_vehiculo"=>$tipo_vehiculo,
                 "patente"=>$patente,
-                "id_planta"=>$id_planta
+                "id_planta"=>$id_planta,
+               	"url_map" => $url_map,
+               	"image_map" => $image_map
                 );
 
-		 $dataadmin = array(
-          		"nombre"=>$nombre,
-                "fecha"=>$fecha,
-                "email"=>$email,
-                "hora"=>$hora,
-                "planta"=>$planta,
-                "patente"=>$patente,
-                "convenio"=>$convenio,
-                "tipo_vehiculo"=>$tipo_vehiculo,
-                "tipo_revision"=>$tipo_revision,
-                "telefono"=>$telefono,
-                "email"=>$email,
-                "comentario"=>$comentario
-                );
         //email al cliente
         $emails = array($email);
         Mail::send('emails.email', $data, function($message) use ($emails){
@@ -476,10 +491,7 @@ class HomeController extends BaseController {
         });
 
         //email al admin
-        //quilicura@sandamaso.cl
-        //agregar validaciones para enviar el correo según planta
-        $emails = array('dan.avila7@gmail.com');
-        switch (Input::get('planta')) {
+        /*switch (Input::get('planta')) {
         	case '1':
         		$emails = array('placillab@sandamaso.cl');
         		break;
@@ -504,22 +516,41 @@ class HomeController extends BaseController {
         	case '8':
         		$emails = array('colina@sandamaso.cl');
         		break;
+        	case '9':
+        		$emails = array('dan.avila7@gmail.com'); // correo puente alto
+        		break;
         	default:
         		$emails = array('dan.avila7@gmail.com');
         		break;
-        }
+        }*/
+
+        	$dataadmin = array(
+          		"nombre"=>$nombre,
+                "fecha"=>$fecha,
+                "email"=>$email,
+                "hora"=>$hora,
+                "planta"=>$planta->nombre,
+                "patente"=>$patente,
+                "convenio"=>$convenio,
+                "tipo_vehiculo"=>$tipo_vehiculo,
+                "tipo_revision"=>$tipo_revision,
+                "telefono"=>$telefono,
+                "email"=>$email,
+                "comentario"=>$comentario
+                );
 		
-			Mail::send('emails.emailadmin', $dataadmin, function($message) use ($emails){
+			Mail::send('emails.emailadmin', $dataadmin, function($message) use ($email_admin){
 	          	$message->from('no-reply@sandamaso.cl', 'San Damaso - Admin');
-	            $message->to($emails, 'test')->subject('Nueva Reserva');
+	            $message->to($email_admin, 'test')->subject('Nueva Reserva');
 	        });
 
 	        return View::make('home.reservado')->with('nombre', $nombre)
 										->with('fecha', $fecha)
-										->with('planta', $planta)
+										->with('planta', $planta->nombre)
 										->with('email', $email)
 										->with('hora', $hora)
-										->with('id_planta', $id_planta);
+										->with('id_planta', $id_planta)
+										->with('url_map', $url_map);
 		}else{
 
 			 return View::make('home.ocupada');

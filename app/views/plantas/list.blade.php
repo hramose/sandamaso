@@ -29,6 +29,9 @@
                                              Numero de Días
             </th>
             <th>
+                Correo Administrador
+            </th>
+            <th>
                             Horas Semana
             </th>
             <th>
@@ -43,9 +46,10 @@
     	@foreach ($grid->data as $item)
             <tr>
                         <td>{{ $item->nombre }}</td>
-                        <td>{{ $item->sabados }}</td>
-                        <td>{{ $item->dias_restriccion }}</td>
+                        <td>{{ $item->sabados == 0 ? 'Atiende' : 'No Atiende' }}</td>
+                        <td>{{ $item->dias_restriccion == 0 ? 'Con días' : 'Sin días' }}</td>
                         <td>{{ $item->num_dias }}</td>
+                        <td>{{ $item->email_admin == null ? 'sin correo': $item->email_admin }}</td>
                         <td><a class="" title="" href="{{ URL::to('/') }}/plantas/horas/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
                         </td>
                         <td><a class="" title="" href="{{ URL::to('/') }}/plantas/horas_weekend/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
