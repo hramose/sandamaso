@@ -18,7 +18,7 @@ class HomeController extends BaseController {
 	public function Index(){
 
 		$fecha_desde = date("d-m-Y", strtotime('+1 day'));
-		$plantas = Plantas::all();
+		$plantas = Plantas::where('activa', 1)->get();
 		return View::make('home.home')->with('fechas_reservar','')
 									->with('planta', '')
 									->with('plantas', $plantas)
@@ -246,6 +246,7 @@ class HomeController extends BaseController {
                         ->rule('mimes:jpeg,png')
                         ->move('img/plantas/');
         $edit->add('email_admin','Correo Administrador','text')->rule('required');
+        $edit->add('activa','Activa', 'checkbox');
 
         return $edit->view('plantas/crud', compact('edit'));
     }

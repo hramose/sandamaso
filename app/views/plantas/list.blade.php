@@ -37,6 +37,9 @@
             <th>
                             Horas Fin de Semana
             </th>
+             <th>
+                            Estado
+            </th>
                  <th>
                             Editar
             </th>
@@ -54,6 +57,7 @@
                         </td>
                         <td><a class="" title="" href="{{ URL::to('/') }}/plantas/horas_weekend/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
                         </td>
+                        <td>{{ $item->activa == 1 ? 'Activa': 'Inactiva' }}</td>
                         <td><a class="" title="Modify" href="{{ URL::to('/') }}/plantas/crud?modify={{$item->id}}"><span class="glyphicon glyphicon-edit"> </span></a>
 						</td>
             </tr>

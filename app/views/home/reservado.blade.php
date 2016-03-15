@@ -4,6 +4,9 @@
 @stop
 
 @section('content')
+<?php
+    header('X-Frame-Options: GOFORIT'); 
+?>
 <div class="row">
 	<div class="col-sm-12">
 	<a href="{{ URL::to('/') }}" class="btn btn-default" style="
@@ -27,43 +30,6 @@
 				<p>Recuerde llegar con 10 minutos de anticipación para una mejor atención, de lo contrario si llegase pasado 10 minutos de su hora, esta será invalidada.</p>
 				<p>¿Cómo llegar?</p>
 				<iframe src="{{ $url_map }}" width="640" height="480"></iframe>
-				<?php 
-				/*switch($id_planta){
-					case 1:
-						//Valparaiso B
-						echo '';
-						break;
-					case 2:
-						//Antofagasta
-						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.kLK64e8verlc" width="640" height="480"></iframe>';
-						break;
-					case 3:
-						//Calma
-						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.knYhL-uea7tQ" width="640" height="480"></iframe>';
-						break;
-					case 4:
-						//chañaral A-B
-					 	echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.kmAh9vJJuR0k" width="640" height="480"></iframe>';
-					    break;
-					case 5:
-						//copiapo A-B
-						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.k9O2yYdJnio8" width="640" height="480"></iframe>';
-						break;
-					case 6:
-						//Quilicura
-						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.kyIoYXdhPHtY" width="640" height="480"></iframe>';
-						break;
-					case 7:
-						//Viña del mar
-						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.kuoL0WlNJgoM" width="640" height="480"></iframe>';
-						break;
-					case 8:
-						//Colina
-						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.koRQoFack-g8" width="640" height="480"></iframe>';
-						break;
-					default:
-						echo '<iframe src="https://www.google.com/maps/d/embed?mid=zScdsfNHORgo.koRQoFack-g8" width="640" height="480"></iframe>';
-					}*/ ?>
 			<h3>Gracias por su preferencia.</h3>
 			<div class="panel panel-success">
 				<div class="form-group form-email">
