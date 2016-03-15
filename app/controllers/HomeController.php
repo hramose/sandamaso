@@ -489,41 +489,6 @@ class HomeController extends BaseController {
 			$message->from('no-reply@sandamaso.cl', 'San Damaso - revisiones técnicas');	
 			$message->to($emails, 'test')->subject('Reserva recibida');
         });
-
-        //email al admin
-        /*switch (Input::get('planta')) {
-        	case '1':
-        		$emails = array('placillab@sandamaso.cl');
-        		break;
-        	case '2':
-        		$emails = array('antofagasta@sandamaso.cl');
-        		break;
-        	case '3':
-        		$emails = array('calama@sandamaso.cl');        		
-        		break;
-        	case '4':
-        		$emails = array('ing.godoy@hotmail.com');
-        		break;
-        	case '5':
-        		$emails = array('copiapo@sandamaso.cl');
-        		break;
-        	case '6':
-        		$emails = array('quilicura@sandamaso.cl');
-        		break;
-        	case '7':
-        		$emails = array('salto@sandamaso.cl');
-        		break;
-        	case '8':
-        		$emails = array('colina@sandamaso.cl');
-        		break;
-        	case '9':
-        		$emails = array('dan.avila7@gmail.com'); // correo puente alto
-        		break;
-        	default:
-        		$emails = array('dan.avila7@gmail.com');
-        		break;
-        }*/
-
         	$dataadmin = array(
           		"nombre"=>$nombre,
                 "fecha"=>$fecha,

@@ -54,9 +54,9 @@
 				<p><b>Patente:</b> {{ $patente }}</p>
 
 				<p><u>¿Cómo llegar?</u></p>
-				<a href="{{ $url_map }}">Click  para ver el mapa</a>
+				<a href="{{ $url_map }}">Click acá para ver el mapa</a>
 				<br>
-				<img src="{{ $image_map }}" />
+				<img src="{{ asset('img/plantas/'.$image_map) }}" />
 
 				<p>Gracias por su preferencia!</p>
 
