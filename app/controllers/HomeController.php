@@ -518,7 +518,6 @@ class HomeController extends BaseController {
 										->with('id_planta', $id_planta)
 										->with('url_map', $url_map);
 		}else{
-
 			 return View::make('home.ocupada');
 		}
 		

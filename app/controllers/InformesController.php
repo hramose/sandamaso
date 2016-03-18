@@ -103,8 +103,8 @@ class InformesController extends BaseController {
 		$reservas = Reservas::where('fecha', $date_back)->get();
 		foreach ($reservas as $reserva) {
 			
-			$planta = Planta::where('nombre', $reserva->planta)->first();
-
+			$planta = Plantas::where('nombre', $reserva->planta)->first();
+			$email = $reserva->email;
 			$data = array(
 				'nombre'=>$reserva->nombre,
 				'fecha' => date("d-m-Y", strtotime($reserva->fecha)),
@@ -121,5 +121,6 @@ class InformesController extends BaseController {
 	            $message->to($email, 'test')->subject('Recordatorio de reserva.');
 	    	});
 		}
+
 	}
 }
