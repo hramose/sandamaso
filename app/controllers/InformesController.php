@@ -96,6 +96,31 @@ class InformesController extends BaseController {
 						->with('fecha',$fecha);
 	}
 
+	public function ListarCorreos(){
+		$filter = DataFilter::source(new RegistroCorreos);
+		$filter->label('Registro de Correos de Recordatorio.');
+		$filter->attributes(array('class'=>'form-inline'));
+		$filter->link("/admin","Volver al Menú", "TR");
+		$filter->add('email','Buscar por email', 'text');
+		$filter->add('patente','Buscar por patente', 'text');
+		$filter->add('patente','Buscar por patente', 'text');
+		$filter->add('planta','Buscar por planta', 'text');
+		$filter->add('fecha','Fecha Reserva','daterange')->format('d/m/Y', 'es');
+		$filter->add('created_at','Fecha Enviado','daterange')->format('d/m/Y', 'es');
+		$filter->submit('Buscar');
+		$filter->reset('Limpiar');
+		$grid = DataGrid::source($filter);
+	    $grid->attributes(array("class"=>"table table-striped"));
+	    $grid->add('email','Email', true);
+	    $grid->add('patente','Patente', true);
+	    $grid->add('planta','Planta', true);
+	    $grid->add('fecha','Fecha', true);
+	    $grid->add('hora','Hora', true);
+	    $grid->add('created_at','Creado', true);
+
+		return View::make('home/registro_correos', compact('filter', 'grid'));
+	}
+
 
 	public function SendRememberEmail(){
 
@@ -120,6 +145,15 @@ class InformesController extends BaseController {
 	          	$message->from('no-reply@sandamaso.cl', 'San Damaso');
 	            $message->to($email, 'test')->subject('Recordatorio de reserva.');
 	    	});
+			//guarda el envió de correos
+	    	DB::table('registro_correos')->insert(
+    			array('email' => $email,
+    				 'patente' => $reserva->patente,
+    				 'planta' => $reserva->planta,
+    				 'fecha' => $reserva->fecha,
+    				 'hora' => $reserva->hora,
+    				 'date_back' => $date_back)
+			);
 		}
 
 	}

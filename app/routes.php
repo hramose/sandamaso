@@ -44,6 +44,7 @@ Route::get('/informes/general/{planta?}/{fecha_desde?}/{fecha_hasta?}','Informes
 Route::get('/informes/general//{fecha_desde?}/{fecha_hasta?}','InformesController@GeneralFechas');
 Route::get('/informes/pordiaget','InformesController@PorDiaGet');
 Route::post('/informes/pordia','InformesController@PorDia');
+Route::get('/informes/correos','InformesController@ListarCorreos');
 
 //crontab
 Route::get('/email/remember','InformesController@SendRememberEmail');

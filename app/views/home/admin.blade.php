@@ -14,6 +14,7 @@
 					<div class="quote">{{ HTML::link('reservas/list','Reservas') }}</div>
 					<div class="quote">{{ HTML::link('informes/pordiaget','Informe por Día') }}</div>
 					<div class="quote">{{ HTML::link('plantas/list','Plantas') }}</div>
+					<div class="quote">{{ HTML::link('informes/correos','Correos') }}</div>
 				</div>
 			</div>
 		</div>
