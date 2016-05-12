@@ -124,7 +124,7 @@ class InformesController extends BaseController {
 
 	public function SendRememberEmail(){
 
-		$date_back = date("Y-m-d",strtotime('-1 day'));
+		$date_back = date("Y-m-d",strtotime('+1 day'));
 		$reservas = Reservas::where('fecha', $date_back)->get();
 		foreach ($reservas as $reserva) {
 			
