@@ -7,5 +7,6 @@ class RegistroCorreos extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'registro_correos';
+	public $timestamps = true;
 
 }

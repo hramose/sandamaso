@@ -117,6 +117,7 @@ class InformesController extends BaseController {
 	    $grid->add('fecha','Fecha', true);
 	    $grid->add('hora','Hora', true);
 	    $grid->add('created_at','Creado', true);
+	    $grid->paginate(20);
 
 		return View::make('home/registro_correos', compact('filter', 'grid'));
 	}
@@ -156,5 +157,9 @@ class InformesController extends BaseController {
 			);
 		}
 
+		Mail::send('emails.emailremember', $data, function($message){
+	          	$message->from('no-reply@sandamaso.cl', 'San Damaso');
+	            $message->to('dan.avila7@gmail.com', 'test')->subject('Recordatorio de reserva. (correos enviados)');
+	    	});
 	}
 }
