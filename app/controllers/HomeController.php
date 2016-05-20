@@ -171,7 +171,7 @@ class HomeController extends BaseController {
 			$fecha2 = date('Y-m-d', strtotime($date));
 		}
 		//echo Input::get('fecha')[1];
-		$filter = DataFilter::source(new Reservas);
+		$filter = DataFilter::source(Reservas::orderBy('fecha', 'desc'));
 		$filter->link('/informes/general/'.Input::get('planta').'/'.$fecha1.'/'.$fecha2,'Exportar', 'TR');
 		$filter->attributes(array('class'=>'form-inline'));
 		$filter->add('nombre','Buscar por nombre', 'text');

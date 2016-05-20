@@ -84,6 +84,9 @@
                     </a>
                                              Hora
             </th>
+            <th>
+                                             Creada
+            </th>
                  <th>
                             Borrar
             </th>
@@ -101,6 +104,7 @@
                         <td>{{ date("d-m-Y",strtotime($item->fecha)) }}</td>
                         <td>{{ $item->ip }}</td>
                         <td>{{ $item->hora }}</td>
+                        <td>{{ date("d-m-Y h:i:s",strtotime($item->created_at)) }}</td>
                         <td><a class="text-danger" title="Delete" onclick="confirmaDelete({{ $item->id }})" href="#"><span class="glyphicon glyphicon-trash"> </span></a>
 						</td>
             </tr>
