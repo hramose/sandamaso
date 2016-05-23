@@ -7,6 +7,9 @@
 <div class="container-fluid">
     <div class="section-header">
       <div class="elements one">
+        <div class="pull-right">
+        <a href="{{ URL::to('informes/general')}}{{ $link }}" class="btn btn-success">Exportar</a>
+        </div>
         <div class="element">
           {{ $filter }}
         </div>

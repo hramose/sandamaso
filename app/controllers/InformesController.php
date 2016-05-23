@@ -3,62 +3,33 @@
 class InformesController extends BaseController {
 
 
-	public function General($planta = null, $fecha_desde = null, $fecha_hasta = null){
+	public function General(){
 
 		$reservas = Reservas::all();
-		$start = new DateTime($fecha_desde);
-		$end = new DateTime($fecha_hasta);
-				if(isset($planta) && isset($fecha_desde)){
-					$reservas = Reservas::where('planta', $planta)
-								->whereBetween('fecha', array($start, $end))
-								->select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora')->orderBy('hora')->get();
-				}else{
-					if(isset($planta) && !isset($fecha_desde)){
-						$reservas = Reservas::where('planta', $planta)
-						->select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora')->orderBy('hora')->get();
-					}else{
-						if(!isset($planta) && isset($fecha_desde)){
-							$reservas = Reservas::whereBetween('fecha', array($start, $end))
-							->select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora')->orderBy('hora')->get();
-						}
-					}
+		$start = new DateTime(Input::get('fecha_desde'));
+		$end = new DateTime(Input::get('fecha_hasta'));
+		$query = Reservas::select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora', 'created_at as creado');
+		
+				if(Input::get('fecha_desde') != ''){
+						$query->whereBetween('fecha', array($start, $end));
 				}
+				if(Input::get('planta') != ''){
+						$query->where('planta', 'like', '%'.Input::get('planta').'%');
+				}
+				if(Input::get('nombre') != ''){
+					$query->where('nombre', 'like', '%'.Input::get('nombre').'%');		
+				}
+				if(Input::get('email') != ''){
+					$query->where('email', 'like', '%'.Input::get('email').'%');		
+				}
+		$reservas = $query->orderBy('fecha')->get();
+		
 		Excel::create('Reservas Generales', function($excel) use($reservas){
     		$excel->sheet('Reservas', function($sheet) use($reservas) {
 	        	$sheet->fromModel($reservas);
 	        	$sheet->setOrientation('landscape');
     		});
 		})->export('xls');
-
-	}
-
-	public function GeneralFechas($fecha_desde = null, $fecha_hasta = null){
-
-		$reservas = Reservas::all();
-		$start = new DateTime($fecha_desde);
-		$end = new DateTime($fecha_hasta);
-				if(isset($planta) && isset($fecha_desde)){
-					$reservas = Reservas::where('planta', $planta)
-								->whereBetween('fecha', array($start, $end))
-								->select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora')->orderBy('hora')->get();
-				}else{
-					if(isset($planta) && !isset($fecha_desde)){
-						$reservas = Reservas::where('planta', $planta)
-						->select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora')->orderBy('hora')->get();
-					}else{
-						if(!isset($planta) && isset($fecha_desde)){
-							$reservas = Reservas::whereBetween('fecha', array($start, $end))
-							->select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora')->orderBy('hora')->get();
-						}
-					}
-				}
-		Excel::create('Reservas Generales', function($excel) use($reservas){
-    		$excel->sheet('Reservas', function($sheet) use($reservas) {
-	        	$sheet->fromModel($reservas);
-	        	$sheet->setOrientation('landscape');
-    		});
-		})->export('xls');
-
 	}
 
 	public function PorDia(){

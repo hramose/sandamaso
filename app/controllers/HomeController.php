@@ -170,9 +170,10 @@ class HomeController extends BaseController {
 			$date = str_replace('/', '-', Input::get('fecha')[1]);
 			$fecha2 = date('Y-m-d', strtotime($date));
 		}
-		//echo Input::get('fecha')[1];
+
 		$filter = DataFilter::source(Reservas::orderBy('fecha', 'desc'));
-		$filter->link('/informes/general/'.Input::get('planta').'/'.$fecha1.'/'.$fecha2,'Exportar', 'TR');
+
+		$link = '?nombre='.Input::get('nombre').'&email='.Input::get('email').'&planta='.Input::get('planta').'&fecha_desde='.$fecha1.'&fecha_hasta='.$fecha2;
 		$filter->attributes(array('class'=>'form-inline'));
 		$filter->add('nombre','Buscar por nombre', 'text');
 		$filter->add('email','Buscar por email', 'text');
@@ -180,14 +181,14 @@ class HomeController extends BaseController {
 		$filter->add('planta','Buscar por planta', 'text');
 		$filter->add('fecha','Fecha Reserva','daterange')->format('d/m/Y', 'es');
 		$filter->submit('Buscar');
-		$filter->reset('Limpiar');
+		//$filter->reset('Limpiar');
 		$filter->build();
 
 		$grid = DataSet::source($filter);
 	    $grid->paginate(10);
 	    $grid->build();
 
-		return View::make('reservas/list', compact('filter', 'grid'));
+		return View::make('reservas/list', compact('filter', 'grid', 'link'));
 	}
 
 	public function Crudreservas(){
