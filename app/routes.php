@@ -17,33 +17,64 @@
 });*/
 //app reserva de horas
 Route::get('/','HomeController@Index');
-Route::post('reservas/buscar','HomeController@BuscarReserva');
-Route::get('/horasdisponibles/{fecha}/{planta}/{patente}/{convenio}','HomeController@HorasDisponibles');
+Route::post('reservas/buscar','BuscadorController@BuscarReserva');
+Route::get('/horasdisponibles/{fecha}/{planta}/{patente}/{convenio}','BuscadorController@HorasDisponibles');
 Route::post('reservas/reservar','HomeController@Reservar');
 Route::post('email-to-share','HomeController@EmailToShare');
 
 
-//admin app
+/*
+** Admin app
+*/
+
+//login
 Route::get('/admin','HomeController@IndexAdmin');
+Route::get('/login','HomeController@IndexAdmin');
 Route::post('/login','HomeController@Login');
 Route::get('/logout','HomeController@Logout');
-Route::get('/reservas/list','HomeController@ListarReservas');
-Route::get('/reservas/delete/{id}','HomeController@DeleteReservas');
-Route::any('/reservas/crud','HomeController@CrudReservas');
-Route::get('/plantas/list','HomeController@ListarPlantas');
-Route::any('/plantas/crud','HomeController@CrudPlantas');
-Route::get('/plantas/horas/{id}/list','HomeController@ListarPlantasHoras');
-Route::any('/plantas/horas/{id}/crud','HomeController@CrudPlantasHoras');
-Route::get('/plantas/horas_weekend/{id}/list','HomeController@ListarPlantasHorasWeekend');
-Route::any('/plantas/horas_weekend/{id}/crud','HomeController@CrudPlantasHorasWeekend');
+//reservas
+Route::group(array('before' => 'auth'), function()
+{
+	Route::group(array('prefix' => 'admin'), function(){
+		
+		//ADMIN RESERVAS
+		Route::get('/reservas/list','ReservasController@ListarReservas');
+		Route::get('/reservas/delete/{id}','ReservasController@DeleteReservas');
+		Route::any('/reservas/crud','ReservasController@CrudReservas');
+
+		//ADMIN PLANTAS
+		Route::get('/plantas/list','PlantasController@ListarPlantas');
+		Route::any('/plantas/crud','PlantasController@CrudPlantas');
+		Route::get('/plantas/horas/{id}/list','PlantasController@ListarPlantasHoras');
+		Route::any('/plantas/horas/{id}/crud','PlantasController@CrudPlantasHoras');
+		Route::get('/plantas/horas_weekend/{id}/list','PlantasController@ListarPlantasHorasWeekend');
+		Route::any('/plantas/horas_weekend/{id}/crud','PlantasController@CrudPlantasHorasWeekend');
+		Route::get('/plantas/empresas/{id}/list','PlantasController@ListarPlantasEmpresas');
+		Route::any('/plantas/empresas/{id}/crud','PlantasController@CrudPlantasEmpresas');
+
+		//ADMIN EMPRESAS
+		Route::get('/empresas/list','EmpresasController@ListarEmpresas');
+		Route::any('/empresas/crud','EmpresasController@CrudEmpresas');
 
 
+		//ADMIN INFORMES
+		Route::get('/informes/general','InformesController@General');
+		Route::get('/informes/pordiaget','InformesController@PorDiaGet');
+		Route::post('/informes/pordia','InformesController@PorDia');
+		Route::get('/informes/correos','InformesController@ListarCorreos');
+	});
+	
+	
+	
+	
+});
 
-//informes
-Route::get('/informes/general','InformesController@General');
-Route::get('/informes/pordiaget','InformesController@PorDiaGet');
-Route::post('/informes/pordia','InformesController@PorDia');
-Route::get('/informes/correos','InformesController@ListarCorreos');
 
-//crontab
+//Rutas publicas Ajax
+Route::get('/get-empresas','EmpresasController@ListaEmpresasPorIdPlanta');
+Route::post('/savesession-idempresa','BuscadorController@SaveSessionIdEmpresa');
+
+/*
+** Crontab
+*/
 Route::get('/email/remember','InformesController@SendRememberEmail');

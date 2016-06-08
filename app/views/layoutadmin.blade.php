@@ -15,7 +15,7 @@
     <meta name="author" content="github.com/davila7">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.css') }}" />
     <script src="{{ asset('js/modernizr.js') }}"></script>
@@ -44,7 +44,14 @@
             <a class="navbar-brand" href="{{ url('admin') }}">Panel de Control</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-
+            <ul class="nav navbar-nav">
+              <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
+              <li>{{ HTML::link('admin/reservas/list','Reservas') }}</li>
+              <li>{{ HTML::link('admin/informes/pordiaget','Informe por Día') }}</li>
+              <li>{{ HTML::link('admin/plantas/list','Plantas') }}</li>
+              <li>{{ HTML::link('admin/informes/correos','Correos') }}</li>
+              <li>{{ HTML::link('admin/empresas/list','Empresas') }}</li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
               <li>@if (Auth::check())
                   <a href="{{ URL::to('/logout'); }}"><i class="glyphicon glyphicon-lock"></i> Cerrar Sesión</a>

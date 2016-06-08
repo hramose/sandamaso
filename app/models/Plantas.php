@@ -9,4 +9,10 @@ class Plantas extends Eloquent {
 	protected $table = 'plantas';
 	public $timestamps = false;
 
+	public function empresas()
+	{
+	    return $this->belongsToMany('Empresas', 'planta_empresa', 
+	      'id_planta', 'id_empresa');
+	}
+
 }

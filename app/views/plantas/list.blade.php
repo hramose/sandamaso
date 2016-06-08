@@ -11,10 +11,10 @@
     <thead>
     <tr>
                  <th>
-                                                <a href="{{ URL::to('/') }}/plantas/list?ord=nombre">
+                                                <a href="{{ URL::to('/') }}/admin/plantas/list?ord=nombre">
                         <span class="glyphicon glyphicon-arrow-up"></span>
                     </a>
-                                                    <a href="{{ URL::to('/') }}/plantas/list?ord=-nombre">
+                                                    <a href="{{ URL::to('/') }}/admin/plantas/list?ord=-nombre">
                         <span class="glyphicon glyphicon-arrow-down"></span>
                     </a>
                                              Nombre
@@ -40,7 +40,13 @@
              <th>
                             Estado
             </th>
-                 <th>
+            <th>
+                            Convenio
+            </th>
+            <th>
+                            Empresas
+            </th>
+            <th>
                             Editar
             </th>
          </tr>
@@ -53,12 +59,15 @@
                         <td>{{ $item->dias_restriccion == 0 ? 'Con días' : 'Sin días' }}</td>
                         <td>{{ $item->num_dias }}</td>
                         <td>{{ $item->email_admin == null ? 'sin correo': $item->email_admin }}</td>
-                        <td><a class="" title="" href="{{ URL::to('/') }}/plantas/horas/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
+                        <td><a class="" title="" href="{{ URL::to('/') }}/admin/plantas/horas/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
                         </td>
-                        <td><a class="" title="" href="{{ URL::to('/') }}/plantas/horas_weekend/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
+                        <td><a class="" title="" href="{{ URL::to('/') }}/admin/plantas/horas_weekend/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
                         </td>
                         <td>{{ $item->activa == 1 ? 'Activa': 'Inactiva' }}</td>
-                        <td><a class="" title="Modify" href="{{ URL::to('/') }}/plantas/crud?modify={{$item->id}}"><span class="glyphicon glyphicon-edit"> </span></a>
+                        <td>{{ $item->convenio == 1 ? 'Tiene': 'No tiene' }}</td>
+                        <td><a class="" title="" href="{{ URL::to('/') }}/admin/plantas/empresas/{{$item->id}}/list"><span class="glyphicon glyphicon-th-list"> </span></a>
+                        </td>
+                        <td><a class="" title="Modify" href="{{ URL::to('/') }}/admin/plantas/crud?modify={{$item->id}}"><span class="glyphicon glyphicon-edit"> </span></a>
 						</td>
             </tr>
         @endforeach

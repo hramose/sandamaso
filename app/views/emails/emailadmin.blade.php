@@ -92,14 +92,16 @@
 						{{ $patente }}
 					</td>
 					</tr>
-					<tr>
-						<th>
-							Convenio
-						</th>
-						<td>
-							{{ $convenio }}
-						</td>
-					</tr>
+					@if($convenio == '1')
+						<tr>
+							<th>
+								Convenio
+							</th>
+							<td>
+								{{ $nombre_empresa }}
+							</td>
+						</tr>
+					@endif
 					<tr>
 						<th>
 							Tipo Vehiculo

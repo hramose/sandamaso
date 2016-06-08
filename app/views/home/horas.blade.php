@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Horas disponibles para {{ $nombre_planta }} el {{ date('d-m-Y',strtotime($fecha)) }}
-           @if($convenio=='1') Con Convenio @endif 
+           @if($convenio=='1') Con convenio {{ ucfirst($nombre_empresa) }} @endif 
             </h3>
             <p>Patente: {{ $patente }}</p>
         </div>

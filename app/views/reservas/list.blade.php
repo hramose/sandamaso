@@ -21,53 +21,53 @@
     <thead>
     <tr>
                  <th>
-                                                <a href="{{ URL::to('/') }}/reservas/list?ord=nombre">
+                                                <a href="{{ URL::to('/') }}/admin/reservas/list?ord=nombre">
                         <span class="glyphicon glyphicon-arrow-up"></span>
                     </a>
-                                                    <a href="{{ URL::to('/') }}/reservas/list?ord=-nombre">
+                                                    <a href="{{ URL::to('/') }}/admin/reservas/list?ord=-nombre">
                         <span class="glyphicon glyphicon-arrow-down"></span>
                     </a>
                                              Nombre
             </th>
                  <th>
-                                                <a href="{{ URL::to('/') }}/reservas/list?ord=email">
+                                                <a href="{{ URL::to('/') }}/admin/reservas/list?ord=email">
                         <span class="glyphicon glyphicon-arrow-up"></span>
                     </a>
-                                                    <a href="{{ URL::to('/') }}/reservas/list?ord=-email">
+                                                    <a href="{{ URL::to('/') }}/admin/reservas/list?ord=-email">
                         <span class="glyphicon glyphicon-arrow-down"></span>
                     </a>
                                              Email
             </th>
                  <th>
-                                                <a href="{{ URL::to('/') }}/reservas/list?ord=patente">
+                                                <a href="{{ URL::to('/') }}/admin/reservas/list?ord=patente">
                         <span class="glyphicon glyphicon-arrow-up"></span>
                     </a>
-                                                    <a href="{{ URL::to('/') }}/reservas/list?ord=-patente">
+                                                    <a href="{{ URL::to('/') }}/admin/reservas/list?ord=-patente">
                         <span class="glyphicon glyphicon-arrow-down"></span>
                     </a>
                                              Patente
             </th>
                  <th>
-                                                <a href="{{ URL::to('/') }}/reservas/list?ord=planta">
+                                                <a href="{{ URL::to('/') }}/admin/reservas/list?ord=planta">
                         <span class="glyphicon glyphicon-arrow-up"></span>
                     </a>
-                                                    <a href="{{ URL::to('/') }}/reservas/list?ord=-planta">
+                                                    <a href="{{ URL::to('/') }}/admin/reservas/list?ord=-planta">
                         <span class="glyphicon glyphicon-arrow-down"></span>
                     </a>
                                              Planta
             </th>
                  <th>
                                                 <span class="glyphicon glyphicon-arrow-up"></span>
-                                                    <a href="{{ URL::to('/') }}/reservas/list?ord=-convenio">
+                                                    <a href="{{ URL::to('/') }}/admin/reservas/list?ord=-convenio">
                         <span class="glyphicon glyphicon-arrow-down"></span>
                     </a>
                                              Convenio
             </th>
                  <th>
-                                                <a href="{{ URL::to('/') }}/reservas/list?ord=tipo_vehiculo">
+                                                <a href="{{ URL::to('/') }}/admin/reservas/list?ord=tipo_vehiculo">
                         <span class="glyphicon glyphicon-arrow-up"></span>
                     </a>
-                                                    <a href="{{ URL::to('/') }}/reservas/list?ord=-tipo_vehiculo">
+                                                    <a href="{{ URL::to('/') }}/admin/reservas/list?ord=-tipo_vehiculo">
                         <span class="glyphicon glyphicon-arrow-down"></span>
                     </a>
                                              Tipo Vehículo
@@ -79,10 +79,10 @@
                                              IP
             </th>
                  <th>
-                                                <a href="{{ URL::to('/') }}/reservas/list?ord=hora">
+                                                <a href="{{ URL::to('/') }}/admin/reservas/list?ord=hora">
                         <span class="glyphicon glyphicon-arrow-up"></span>
                     </a>
-                                                    <a href="{{ URL::to('/') }}/reservas/list?ord=-hora">
+                                                    <a href="{{ URL::to('/') }}/admin/reservas/list?ord=-hora">
                         <span class="glyphicon glyphicon-arrow-down"></span>
                     </a>
                                              Hora
@@ -123,7 +123,7 @@
 
 	var r = confirm("¿Esta seguro que desea borrar este registro?");
 		if (r == true) {
-		    window.location="{{ URL::to('/') }}/reservas/delete/"+id;
+		    window.location="{{ URL::to('/') }}/admin/reservas/delete/"+id;
 		}
 	}
 

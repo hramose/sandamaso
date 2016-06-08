@@ -24,6 +24,10 @@
 				<p>Debe presentar el correo al momento de presentarse en la planta de revisión</p>
 				<p>Nombre: {{ $nombre }}</p>
 				<p>Fecha: {{ date('d-m-Y',strtotime($fecha)) }} {{ $hora }}</p>
+				@if($convenio=='1')
+				<p> Con convenio {{ ucfirst($nombre_empresa) }} </p>
+				<p> Debe llevar un documento que acredite que pertenece a la empresa {{ ucfirst($nombre_empresa) }} para hacer valido el convenio. </p>
+				@endif 
 				<p>Planta: {{ $planta }}</p>
 				<br>
 				<br>

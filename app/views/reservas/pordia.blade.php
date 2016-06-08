@@ -7,7 +7,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-12">
-		{{ Form::open(array('url' => 'informes/pordia', 'id'=>'form_informe')) }}
+		{{ Form::open(array('url' => 'admin/informes/pordia', 'id'=>'form_informe')) }}
 			<div class="panel panel-default">
 			  <div class="panel-heading">Exportar por Fecha</div>
 			  <div class="panel-body">

@@ -23,11 +23,6 @@
 </div><!-- /.modal -->
 
 
-{{ Form::open(array('url' => 'reservas/buscar', 'id'=>'form_busca')) }}
-
-
-
-
 <div class="modal fade" id="myModal" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -53,13 +48,35 @@
             </div>
         </div>
 
+<div class="modal fade empresas-modal" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Empresas con Convenio</h4>
+            </div>
+                <div class="modal-body">
+                    <select class="form-control select-empresa" id="select-empresa">
+                    </select>
+                    <div class="alert alert-warning alert-empresas-empty" style="display:none">
+                        Esta planta no tiene empresas con convenio.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="save-empresa" data-dismiss="modal">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+        </div>
+    </div>
+</div>
 
 
 
-        <div class="row">
+
+    
+        <div class="row">  
             <div class="col-sm-4">
                 <div class="form-group">
-                    <input type="text" placeholder="Ingrese la patente (LLNNNN, LLLLNN o LLLNNN)" name="patente" id="patente" class="form-control" value="{{ $patente == '' ? '': $patente }}" required /> 
+                    <input type="text" placeholder="Ingrese la patente (LLNNNN, LLLLNN o LLLNNN)" id="patente" class="form-control" value="{{ $patente == '' ? '': $patente }}" required /> 
                 </div>
             </div>
             <div class="col-sm-4">
@@ -70,9 +87,15 @@
             </div>
         </div>
         <div class="row form_1 {{ $patente == '' ? 'hide' : '' }}">
-            <h2 style="color:red">Recuerde no reservar hora los días feriados.</h2>
-            <p>Disponemos de 3 meses para reserva de hora</p>
-            <div class="col-md-12" style="    margin: 30px 0;">
+            <blockquote>
+                <h3 style="color:red">Recuerde no reservar hora los días feriados.</h3>
+                <small>Disponemos de 3 meses para reserva de hora</small>
+            </blockquote>
+            <div class="col-md-12 well bs-component" style=" margin: 30px 0;">
+            {{ Form::open(array('url' => 'reservas/buscar', 'id'=>'form_busca')) }}
+                <input type="hidden" name="patente" id="patente_value" value="{{ $patente == '' ? '': $patente }}" />
+                <fieldset>
+                <legend>Busqueda por rango de fechas.</legend>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label for="Rango de Fechas" id="fecha_dl">Fecha Desde</label>
@@ -95,27 +118,34 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="planta">
                                 @foreach($plantas as $item)
-                                <li><a href="#" class="val_planta" data-val="{{ $item->id }}">{{ $item->nombre }}</a></li>
+                                <li><a href="#" class="val_planta" data-val="{{ $item->id }}" data-convenio="{{$item->convenio}}">{{ $item->nombre }}</a></li>
                                 @endforeach
                             </ul>
                         </div>
                         <label class="hide" id="planta_alert" style="color:red">Debe seleccionar una planta</label>
                     </div>
                     <input type="hidden" name="id_planta" id="id_planta" value="{{ $id_planta == '' ? '' : $id_planta }}" />
-                    <div class="checkbox hide" id="div_convenio">
-                        <label>
-                            <input type="checkbox" name="convenio" @if($convenio == '1') checked @endif> Con Convenio
-                        </label>
+                     <div class="form-group hide" id="div_convenio">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="convenio" class="check-convenio" @if($convenio == '1') checked @endif> <span id="text-convenio">Con Convenio</span>
+                            </label>
+                            <span class="label label-info" id="nombre-empresa"></span>
+                        </div>
                     </div>
                 </div>
+                 <input type="hidden" name="empresa-selected" id="empresa-selected" value="0" />
                 <button type="button" id="btn_submit" class="btn btn-primary">Buscar</button>
+                </fieldset>
+                {{ Form::close() }}
             </div>
-            {{ Form::close() }}
-            @if($fechas_reservar)
+        </div>
+ 
+            @if($carga == 1)
             <div class="row">
                 <div class="col-sm-12">
                     <br/>
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">Fechas con horas disponibles</div>
                         <div class="panel-body">
                             <p>Haz click sobre una fecha para ver las horas disponibles.</p>
@@ -137,19 +167,59 @@
                 </div>
             </div>
             @else
-            @if($carga == 1)
-            <br/>
-            <div class="alert alert-info" role="alert">Reserva tu hora buscando por un rango de fechas.</div>
-            @else
-            <br/>
-            <div class="alert alert-warning" role="alert">No se encontraron resultados para esta busqueda, vuelve a intentarlo con otro rango de fechas</div>
-            @endif
-
+                @if($carga == 0)
+                <br/>
+                <div class="alert alert-warning" role="alert">No se encontraron resultados para esta busqueda, vuelve a intentarlo con otro rango de fechas</div>
+                @endif
             @endif
 
 
             <script type="text/javascript">
 
+            $('.check-convenio').click(function(){
+                if($(this).is(':checked'))
+                {
+                var id = $('#id_planta').val();
+                var url = "{{ URL::to('/') }}/get-empresas";
+                $.get( url, { id : id } )
+                  .done(function( data ) {
+                    $(".select-empresa").empty()
+                    if(data.length > 0){
+                        $(".select-empresa").show();
+                        $('.alert-empresas-empty').hide();
+                        $(".select-empresa").append('<option value="0">Seleccione una empresa.</option>');
+                       for (i = 0; i < data.length; i++){
+                        $(".select-empresa").append('<option value="'+data[i].id+'">'+data[i].nombre+'</option>');
+                        } 
+                    }else{
+                        $(".select-empresa").hide();
+                        $('.alert-empresas-empty').show();
+                    }
+                    
+                    $('.empresas-modal').modal('show');
+                  });
+                }else{
+                    var url = "{{ URL::to('/') }}/savesession-idempresa";
+                    $.post( url , { id: 0 } )
+                      .done(function( data ) {
+                        console.log(data);
+                        $('#nombre-empresa').hide('fast');
+                      });
+                }
+            });
+
+            $('#save-empresa').click(function(){
+                var id = $('#select-empresa option:selected').val();
+                var text = $('#select-empresa option:selected').text();
+                var url = "{{ URL::to('/') }}/savesession-idempresa";
+                $.post( url , { id: id} )
+                  .done(function( data ) {
+                    console.log(data);
+                    $('#empresa-selected').val(true);
+                    $('#nombre-empresa').text(text);
+                    $('#nombre-empresa').show('fast');
+                  });
+            });
 
             @if(!$id_planta)
             setTimeout(function(){$('#myModal').modal('show'); },0000); 
@@ -158,62 +228,66 @@
 
             $(function() {
                 $('.val_planta').click(function(){
+                    $('.check-convenio').prop('checked', false);
                     var texto = $(this).text();
                     $('#id_planta').val($(this).attr('data-val'));
-                    if($(this).attr('data-val') == 1){
-                        $('#div_convenio').addClass('hide');
-                    }else{
+                    if($(this).attr('data-convenio') == 1){
                         $('#div_convenio').removeClass('hide');
+                    }else{
+                        $('#div_convenio').addClass('hide');
                     }
                     $('#planta_nombre').text(texto);
                 });
 
                 $('#btn_submit').click(function(){
-
-                    var inicio = document.getElementById('fecha_dl');
-                    var hasta = document.getElementById('fecha_hl');
-                    var planta = document.getElementById('planta_l');
-
-
-
-                    inicio.innerHTML = "Fecha Desde";
-                    inicio.style.color = "black";
-                    hasta.innerHTML = "Fecha hasta";
-                    hasta.style.color = "black";
-                    planta.innerHTML = "Planta";
-                    planta.style.color = "black";
-
-
-                    if($('#fecha_d').val() == '' || $('#fecha_h').val() =='' || $('#id_planta').val() == ''){
-                        if($('#fecha_d').val() == ''){
-                            inicio.innerHTML = "Fecha Desde (*)";
-                            inicio.style.color = "red";
-                        }
-
-                        if($('#fecha_h').val() == ''){
-                            hasta.innerHTML = "Fecha Hasta (*)";
-                            hasta.style.color = "red";
-                        }
-
-                        if($('#id_planta').val() == '')
-                        {
-                            planta.innerHTML = "Planta (*)";
-                            planta.style.color = "red";
-
-                        }
-                    }else{
-                     $('#form_busca').submit();   
+                    if(validaBusqueda() == true)
+                    {
+                        $('#form_busca').submit();  
                     }
-
-                    // if($('#id_planta').val() == ''){
-                    //     $('#planta_alert').removeClass('hide');
-                    // }else{
-                    //     $('#planta_alert').addClass('hide');
-                        
-                    // }
-
                 });
+function validaBusqueda(){
+    var inicio = document.getElementById('fecha_dl');
+    var hasta = document.getElementById('fecha_hl');
+    var planta = document.getElementById('planta_l');
+    var nombre_empresa = document.getElementById('nombre-empresa');
 
+    inicio.innerHTML = "Fecha Desde";
+    inicio.style.color = "black";
+    hasta.innerHTML = "Fecha hasta";
+    hasta.style.color = "black";
+    planta.innerHTML = "Planta";
+    planta.style.color = "black";
+
+    if($('#fecha_d').val() == '')
+    {
+        inicio.innerHTML = "Fecha Desde (*)";
+        inicio.style.color = "red";
+        return false;
+    }
+    if($('#fecha_h').val() == '')
+    {
+        hasta.innerHTML = "Fecha Hasta (*)";
+        hasta.style.color = "red";
+        return false;
+    }
+    if($('#id_planta').val() == '')
+    {
+        planta.innerHTML = "Planta (*)";
+        planta.style.color = "red";
+        return false;
+    }
+    if($('.check-convenio').is(':checked'))
+    {
+        if($('#empresa-selected').val() == false)
+        {
+            nombre_empresa.innerHTML = "Debe seleccionar una empresa";
+            $('.empresas-modal').modal('show');
+            return false;
+        }
+    }
+
+    return true;
+}
 function validaForm(){
     var error = "";
     var ok = true;
@@ -369,6 +443,7 @@ $('#btn_patente').click(function(){
         //if(validaDate()){
             $('.form_1').removeClass('hide');
             $('#formato').addClass('hide');
+            $('#patente_value').val($('#patente').val());
         /*}else{
             $('.form_1').addClass('hide');
             $('#formato').removeClass('hide').html('No es posible reservar este mes. Favor consultar el mes correspondiente en <a href="http://www.sandamaso.cl/servicios/calendario-de-atencion/">Calendario de Atención</a> ');
