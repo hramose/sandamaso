@@ -9,7 +9,7 @@ class InformesController extends BaseController {
 		$start = new DateTime(Input::get('fecha_desde'));
 		$end = new DateTime(Input::get('fecha_hasta'));
 		$query = Reservas::select('nombre','email', 'telefono', 'patente', "convenio", 'tipo_vehiculo', 'planta', 'fecha', 'hora', 'created_at as creado');
-		
+
 				if(Input::get('fecha_desde') != ''){
 						$query->whereBetween('fecha', array($start, $end));
 				}
@@ -17,13 +17,16 @@ class InformesController extends BaseController {
 						$query->where('planta', 'like', '%'.Input::get('planta').'%');
 				}
 				if(Input::get('nombre') != ''){
-					$query->where('nombre', 'like', '%'.Input::get('nombre').'%');		
+					$query->where('nombre', 'like', '%'.Input::get('nombre').'%');
+				}
+				if(Input::get('patente') != ''){
+					$query->where('patente', 'like', '%'.Input::get('patente').'%');
 				}
 				if(Input::get('email') != ''){
-					$query->where('email', 'like', '%'.Input::get('email').'%');		
+					$query->where('email', 'like', '%'.Input::get('email').'%');
 				}
 		$reservas = $query->orderBy('fecha')->get();
-		
+
 		Excel::create('Reservas Generales', function($excel) use($reservas){
     		$excel->sheet('Reservas', function($sheet) use($reservas) {
 	        	$sheet->fromModel($reservas);
@@ -33,9 +36,9 @@ class InformesController extends BaseController {
 	}
 
 	public function PorDia(){
-		$start = new DateTime(Input::get('fecha'));	
+		$start = new DateTime(Input::get('fecha'));
 		$id_planta = Input::get('id_planta');
-		
+
 		if($id_planta){
 			$planta = Plantas::find($id_planta)->nombre;
 			$reservas = Reservas::where('fecha', $start)
@@ -47,7 +50,7 @@ class InformesController extends BaseController {
 				->select('nombre','email', 'telefono', 'patente', 'tipo_vehiculo', 'planta', 'fecha', 'hora')
 				->orderBy('hora')->get();
 		}
-		
+
 		Excel::create('Reservas Por Día', function($excel) use($reservas){
     		$excel->sheet('Reservas', function($sheet) use($reservas) {
 	        	$sheet->fromModel($reservas);
@@ -99,7 +102,7 @@ class InformesController extends BaseController {
 		$date_back = date("Y-m-d",strtotime('+1 day'));
 		$reservas = Reservas::where('fecha', $date_back)->get();
 		foreach ($reservas as $reserva) {
-			
+
 			$planta = Plantas::where('nombre', $reserva->planta)->first();
 			$email = $reserva->email;
 			$data = array(

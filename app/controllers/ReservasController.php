@@ -16,7 +16,7 @@ class ReservasController extends BaseController {
 
 		$filter = DataFilter::source(Reservas::orderBy('fecha', 'desc'));
 
-		$link = '?nombre='.Input::get('nombre').'&email='.Input::get('email').'&planta='.Input::get('planta').'&fecha_desde='.$fecha1.'&fecha_hasta='.$fecha2;
+		$link = '?nombre='.Input::get('nombre').'&email='.Input::get('email').'&patente='.Input::get('patente').'&planta='.Input::get('planta').'&fecha_desde='.$fecha1.'&fecha_hasta='.$fecha2;
 		$filter->attributes(array('class'=>'form-inline'));
 		$filter->add('nombre','Buscar por nombre', 'text');
 		$filter->add('email','Buscar por email', 'text');
@@ -42,7 +42,7 @@ class ReservasController extends BaseController {
     }
 
     public function DeleteReservas($id){
-    	$reserva = Reservas::find($id)->delete();    	
+    	$reserva = Reservas::find($id)->delete();
     	$fechasConvenio = FechasReservasConvenio::where('id_reservas', $id)->first();
     	if($fechasConvenio){
     		$horasConvenio = HorasConvenio::where('id_fecha', $fechasConvenio->id)->delete();

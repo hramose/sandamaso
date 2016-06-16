@@ -22,6 +22,8 @@ class BuscadorController extends BaseController {
 
 
 	public function BuscarReserva(){
+		//TODO CUANDO NO HAY HORAS INGRESADDAS EN LA BD IGUAL TIRA LAS FECHAS
+		// ESTÁ BIEN PARA EL CLIENTE PERO HAY Q VER POR Q HACE ESO
 		$id_planta = Input::get('id_planta');
 		$planta = Plantas::find($id_planta);
 		$fecha_desde = Input::get('fecha_desde');

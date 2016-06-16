@@ -8,14 +8,14 @@
     <div class="section-header">
       <div class="elements one">
         <div class="pull-right">
-        <a href="{{ URL::to('informes/general')}}{{ $link }}" class="btn btn-success">Exportar</a>
+        <a href="{{ URL::to('admin/informes/general')}}{{ $link }}" class="btn btn-success">Exportar</a>
         </div>
         <div class="element">
           {{ $filter }}
         </div>
       </div>
     </div>
-    
+
 
     <table class="table table-striped">
     <thead>
