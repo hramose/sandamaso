@@ -12,6 +12,7 @@
 			    <h3>Bienvenido {{ Auth::user()->username }}</h3>
 			  </a>
 			  {{ HTML::link('admin/reservas/list', 'Reservas', array('class' => 'list-group-item'))}}
+			  {{ HTML::link('admin/reservas-convenio/list', 'Reservas', array('class' => 'list-group-item'))}}
 			  {{ HTML::link('admin/informes/pordiaget', 'Informe por Día', array('class' => 'list-group-item'))}}
 			  {{ HTML::link('admin/plantas/list', 'Plantas', array('class' => 'list-group-item'))}}
 			  {{ HTML::link('admin/informes/correos', 'Correos', array('class' => 'list-group-item'))}}
