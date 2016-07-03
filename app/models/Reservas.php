@@ -14,7 +14,10 @@ class Reservas extends Eloquent {
 	 * @var array
 	 */
 	public function fechas_reservas(){
-        return $this->hasMany('FechasReservas', 'id');
+        return $this->hasMany('FechasReservas', 'id_reservas');
     }
 
+    public function fechas_reservas_convenio(){
+        return $this->hasOne('FechasReservasConvenio', 'id_reservas');
+    }
 }

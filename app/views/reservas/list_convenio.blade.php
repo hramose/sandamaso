@@ -65,6 +65,9 @@
                     </a>
                                              Tipo Vehículo
             </th>
+            <th>
+                                             Empresa
+            </th>
                  <th>
                                              Fecha
             </th>
@@ -96,12 +99,13 @@
                         <td>{{ $item->patente }}</td>
                         <td>{{ $item->planta }}</td>
                         <td>{{ $item->tipo_vehiculo }}</td>
+                        <td>{{ $item['fechas_reservas_convenio']['empresa']['nombre'] }}</td>
                         <td>{{ date("d/m/Y",strtotime($item->fecha)) }}</td>
                         <td>{{ $item->ip }}</td>
                         <td>{{ $item->hora }}</td>
                         <td>{{ date("d/m/Y h:i:s",strtotime($item->created_at)) }}</td>
                         <td><a class="text-danger" title="Delete" onclick="confirmaDelete({{ $item->id }})" href="#"><span class="glyphicon glyphicon-trash"> </span></a>
-						</td>
+                        </td>
             </tr>
     @endforeach
         </tbody>
@@ -111,13 +115,13 @@
 </div>
 <script>
 
-	var confirmaDelete = function(id){
+    var confirmaDelete = function(id){
 
-	var r = confirm("¿Esta seguro que desea borrar este registro?");
-		if (r == true) {
-		    window.location="{{ URL::to('/') }}/admin/reservas/delete/"+id;
-		}
-	}
+    var r = confirm("¿Esta seguro que desea borrar este registro?");
+        if (r == true) {
+            window.location="{{ URL::to('/') }}/admin/reservas/delete/"+id;
+        }
+    }
 
 </script
 @stop

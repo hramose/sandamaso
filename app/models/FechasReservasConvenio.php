@@ -22,4 +22,8 @@ class FechasReservasConvenio extends Eloquent {
         return $this->belongsTo('Reservas', 'id_reservas');
     }
 
+    public function empresa(){
+        return $this->belongsTo('Empresas', 'id_empresa');
+    }
+
 }

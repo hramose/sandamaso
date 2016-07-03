@@ -36,9 +36,10 @@ Route::get('/logout','HomeController@Logout');
 Route::group(array('before' => 'auth'), function()
 {
 	Route::group(array('prefix' => 'admin'), function(){
-		
+
 		//ADMIN RESERVAS
 		Route::get('/reservas/list','ReservasController@ListarReservas');
+		Route::get('/reservas-convenio/list','ReservasController@ListarReservasConvenio');
 		Route::get('/reservas/delete/{id}','ReservasController@DeleteReservas');
 		Route::any('/reservas/crud','ReservasController@CrudReservas');
 
@@ -63,10 +64,10 @@ Route::group(array('before' => 'auth'), function()
 		Route::post('/informes/pordia','InformesController@PorDia');
 		Route::get('/informes/correos','InformesController@ListarCorreos');
 	});
-	
-	
-	
-	
+
+
+
+
 });
 
 

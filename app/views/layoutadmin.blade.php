@@ -26,7 +26,7 @@
             {{ Rapyd::styles() }}
         </head>
         <body>
-            
+
           <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
           <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
@@ -47,6 +47,7 @@
             <ul class="nav navbar-nav">
               <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
               <li>{{ HTML::link('admin/reservas/list','Reservas') }}</li>
+              <li>{{ HTML::link('admin/reservas-convenio/list','Reservas Convenio') }}</li>
               <li>{{ HTML::link('admin/informes/pordiaget','Informe por Día') }}</li>
               <li>{{ HTML::link('admin/plantas/list','Plantas') }}</li>
               <li>{{ HTML::link('admin/informes/correos','Correos') }}</li>
@@ -62,7 +63,7 @@
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
-                
+
     <div class="container">
         @yield('content')
     </div>
