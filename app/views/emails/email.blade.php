@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>San Damaso</title>
-		
+
 		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
 		<style>
@@ -10,7 +10,7 @@
 				padding: 0;
 				width: 100%;
 				height: 100%;
-				color: #B0BEC5;
+				color: #181E21;
 				display: table;
 				font-weight: 50;
 				font-family: 'Lato';
@@ -61,7 +61,7 @@
 				<a href="{{ $url_map }}">Click acá para ver el mapa</a>
 				<br>
 				<img src="{{ asset('img/plantas/'.$image_map) }}" />
-				
+
 				<p>Gracias por su preferencia!</p>
 
 				<a href="http//www.sandamaso.cl"><p>Revisiones Técnicas San Dámaso</p></a>
